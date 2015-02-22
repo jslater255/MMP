@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /** Called when the user clicks the Send button */
+    /** Called when the user clicks the OK button */
     public void sendMessage(View view) {
         Intent intent = new Intent(this, Activity2.class);
         EditText editText = (EditText) findViewById(R.id.userName);

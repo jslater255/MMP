@@ -1,16 +1,45 @@
 package com.cs394.jas38.pdultrasonicclassification;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.ArrayList;
+
+import static android.view.View.INVISIBLE;
 
 public class Activity2 extends ActionBarActivity {
 
     TextView textView;
+    ReadWrite rw;
+    ArrayList<Double> wav = new ArrayList<>();
+    Context context;
+
+    GraphView graph;
+
+    ProgressBar mProgress;
+
+    // Need handler for callbacks to the UI thread
+    final Handler mHandler = new Handler();
+
+    // Create runnable for posting
+    final Runnable mUpdateResults = new Runnable() {
+        public void run() {
+            updateResultsInUi();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,13 +47,43 @@ public class Activity2 extends ActionBarActivity {
 
         setContentView(R.layout.activity_activity2);
 
+        rw = new ReadWrite();
+
+        context = this;
+        mProgress = (ProgressBar) findViewById(R.id.progBar);
+
+
+        startLongRunningOperation();
+
         textView = (TextView) findViewById(R.id.userNameOut);
+
+
 
         //Gets previous intent from MainActivity
         Intent intent = getIntent();//
 
-        textView.setText(intent.getExtras().getString(MainActivity.EXTRA_MESSAGE));
+        //intent.getExtras().getString(MainActivity.EXTRA_MESSAGE) "/storage/emulated/0/pdclass/ea.csv"
 
+
+        //rw.writeCSV(this,"/storage/emulated/0/pdclass/");
+
+        //wav = rw.readCSV(this, "/storage/emulated/0/pdclass/");
+        textView.setText(Integer.toString(wav.size()));
+
+        graph = (GraphView) findViewById(R.id.graph);
+
+        // set manual X bounds
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(500);
+        // set manual Y bounds
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(-1);
+        graph.getViewport().setMaxY(1);
+
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setScalable(true);
+        graph.setVisibility(INVISIBLE);
     }
 
 
@@ -48,5 +107,34 @@ public class Activity2 extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void startLongRunningOperation() {
+
+        // Fire off a thread to do some work that we shouldn't do directly in the UI thread
+        Thread t = new Thread() {
+            public void run() {
+                wav = rw.readCSV(context);
+                mHandler.post(mUpdateResults);
+            }
+        };
+        t.start();
+    }
+
+    private void updateResultsInUi() {
+
+        // Back in the UI thread -- update our UI elements based on the data in mResults
+
+        DataPoint[] data = new DataPoint[wav.size()];
+        for (int idx=0; idx < wav.size(); idx++)
+        {
+            data[idx] = new DataPoint(idx, wav.get(idx));
+
+        }
+
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
+        graph.addSeries(series);
+        graph.setVisibility(View.VISIBLE);
+        mProgress.setVisibility(INVISIBLE);
     }
 }

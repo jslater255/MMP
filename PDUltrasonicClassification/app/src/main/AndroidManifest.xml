@@ -20,6 +20,9 @@
             android:name=".Activity2"
             android:label="@string/title_activity_activity2" >
         </activity>
+        <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     </application>
 
 </manifest>
