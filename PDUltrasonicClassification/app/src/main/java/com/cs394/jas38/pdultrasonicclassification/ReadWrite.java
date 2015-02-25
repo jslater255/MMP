@@ -1,37 +1,53 @@
 package com.cs394.jas38.pdultrasonicclassification;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
-import com.jjoe64.graphview.series.DataPoint;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
- * Created by Slater on 20/02/15.
+ * ---------------------------------------------------------------
+ * <p/>
+ * CALL NAME     : ReadWrite
+ * <p/>
+ * FUNCTION      :
+ * <p/>
+ * INPUTS        :
+ * <p/>
+ * OUTPUTS       :
+ * <p/>
+ * AMENDMENTS    :  Created by, James Slater
+ * <p/>
+ * --------------------------------------------------------------
  */
 public class ReadWrite {
 
 
-    public ArrayList<Double> readCSV(Context context)
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     :
+     * <p/>
+     * FUNCTION      :
+     * <p/>
+     * INPUTS        :
+     * <p/>
+     * OUTPUTS       :
+     * <p/>
+     * AMENDMENTS    :  Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
+    public ArrayList<Double> readCSV(Context context, String fileName)
     {
         ArrayList<Double> wav = new ArrayList<>();
-        File file = new File(context.getExternalFilesDir(null), "/ea.csv");
+        File file = new File(context.getExternalFilesDir(null), fileName);
         Object out;
         System.out.println(context.getExternalFilesDir(null));
         try {
@@ -68,16 +84,33 @@ public class ReadWrite {
         return wav;
     }
 
-    public void writeCSV(Context context, String filePath)
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     : writeCSV
+     * <p/>
+     * FUNCTION      :
+     * <p/>
+     * INPUTS        :
+     * <p/>
+     * OUTPUTS       :
+     * <p/>
+     * AMENDMENTS    :  Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
+    public void writeCSV(Context context, String fileName, ArrayList<Double> wav)
     {
 
+        String out = "";
+        for (double idx : wav)
+        {
+            out += Double.toString(idx) + ",";
+        }
+
         try {
-
-            String FILENAME = "hello_file";
-            String string = "hello world!";
-
-            FileOutputStream fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(string.getBytes());
+            FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);//context.getExternalFilesDir(null)+
+            fos.write(out.getBytes());
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity2"
+            android:name=".LoadData"
             android:label="@string/title_activity_activity2" >
         </activity>
         <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
