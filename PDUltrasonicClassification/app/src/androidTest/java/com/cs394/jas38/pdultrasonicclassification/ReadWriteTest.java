@@ -41,7 +41,7 @@ public class ReadWriteTest extends AndroidTestCase {
 
         rw.writeCSV(context, fileName, wavTest);
 
-        File file = new File(fileName);
+        File file = new File(context.getExternalFilesDir(null)+fileName);
 
         assertTrue(file.exists());
     }
@@ -50,8 +50,8 @@ public class ReadWriteTest extends AndroidTestCase {
 
         ReadWrite rw = new ReadWrite();
 
-        ArrayList<Double> readWav = rw.readCSV(context, fileName);
+        ArrayList<Double> readWav = rw.readCSV(context, "/ea.csv");
 
-        assertEquals(wavTest.get(0),readWav.get(0));
+        assertEquals(03.13E-4,readWav.get(0));
     }
 }

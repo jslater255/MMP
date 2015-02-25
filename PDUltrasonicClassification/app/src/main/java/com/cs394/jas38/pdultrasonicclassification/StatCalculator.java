@@ -173,13 +173,14 @@ public class StatCalculator {
      * <p/>
      * --------------------------------------------------------------
      */
-    public void variance(double avg, ArrayList<Double> wav){
+    public double variance(double avg, ArrayList<Double> wav){
         double temp = 0;
         for(double idx : wav)
         {
-            temp += avg - idx;
-            temp = Math.pow(temp,2);
+            temp += Math.pow((idx - avg),2);
         }
+        temp = temp / (wav.size()-1);
+        return Math.sqrt(temp);
     }
 
     /**
@@ -198,10 +199,10 @@ public class StatCalculator {
      * <p/>
      * --------------------------------------------------------------
      */
-    public void countCrossZero(ArrayList<Double> wav, Context context){
+    public int countCrossZero(ArrayList<Double> wav, Context context){
 
         LinkedList<Double> fifo = new LinkedList<Double>();
-        int peakCount = 0;
+        int crossZeroCount = 0;
         double lastPos = 0;
 
         for (int idx = 0;idx < (wav.size()-1); idx++)
@@ -216,13 +217,14 @@ public class StatCalculator {
                     // cast to int so it rounds
                     if ((int)(lastPos+0.6) != (int)(0.6*(idx-5)))
                     {
-                        peakCount++;
+                        crossZeroCount++;
                         lastPos = (0.6*(idx-5));
                     }
                 }
             }
         }
-        System.out.println("Cross Zero: " + peakCount);
+        System.out.println("Cross Zero: " + crossZeroCount);
+        return crossZeroCount;
     }
 
     /**
@@ -245,6 +247,7 @@ public class StatCalculator {
 
         double m;
 
+        //0.6 as that is how many milliseconds for each point
         m = (y1 -y2)/((0.6*x1) - (0.6*x2));
 
         return m;

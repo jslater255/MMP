@@ -3,6 +3,7 @@ package com.cs394.jas38.pdultrasonicclassification;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -109,9 +110,14 @@ public class ReadWrite {
         }
 
         try {
-            FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);//context.getExternalFilesDir(null)+
-            fos.write(out.getBytes());
-            fos.close();
+            //FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);//context.getExternalFilesDir(null)+
+            //fos.write(out.getBytes());
+            //fos.close();
+            File file = new File(context.getExternalFilesDir(null)+fileName);
+
+            BufferedOutputStream bOut = new BufferedOutputStream(new FileOutputStream(file));
+            bOut.write(out.getBytes(),0,out.length());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
