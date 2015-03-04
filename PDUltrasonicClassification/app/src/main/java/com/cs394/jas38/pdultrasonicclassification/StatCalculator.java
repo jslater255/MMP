@@ -122,9 +122,10 @@ public class StatCalculator {
     /**
      * ---------------------------------------------------------------
      * <p/>
-     * CALL NAME     :
+     * CALL NAME     : findSpikeFeatures
      * <p/>
-     * FUNCTION      :
+     * FUNCTION      : finds the peak location, peak start (x value), when spike comes back to zero,
+     *                  Spike end
      * <p/>
      * INPUTS        :
      * <p/>
@@ -134,28 +135,11 @@ public class StatCalculator {
      * <p/>
      * --------------------------------------------------------------
      */
-    public int peaks(ArrayList<Double> wav){
-        int peaks = 0;
+    public SpikeFeatureStruct findSpikeFeatures(int crossZeroPoint, ArrayList<Double> wav){
 
-        //Starts at 1 to be able to check the first peak
-        for(int i=1; i < wav.size(); i++)
-        {
-            //Make sure we have  filtered out the noise
-            //Make sure we are not at the end of the array
-            if((wav.get(i) > 0.5) && (i < wav.size()))
-            {
-                if(wav.get(i) > wav.get(i-1) && wav.get(i) > wav.get(i+1))
-                {
-                    peaks++;
-                    /**System.out.println("");
-                     System.out.println("pos= " + i);
-                     System.out.println("b1= " + wav.get(i-1));
-                     System.out.println("b2 (peak)= " + wav.get(i));
-                     System.out.println("b3= " + wav.get(i+1));**/
-                }
-            }
-        }
-        return peaks;
+        SpikeFeatureStruct spikes = new SpikeFeatureStruct(crossZeroPoint, wav);
+
+        return spikes;
     }
 
     /**
@@ -219,6 +203,7 @@ public class StatCalculator {
                     {
                         crossZeroCount++;
                         lastPos = (0.6*(idx-5));
+                        findSpikeFeatures(idx, wav);
                     }
                 }
             }

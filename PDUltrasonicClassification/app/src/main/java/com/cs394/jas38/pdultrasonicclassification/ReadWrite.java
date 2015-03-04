@@ -110,9 +110,6 @@ public class ReadWrite {
         }
 
         try {
-            //FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);//context.getExternalFilesDir(null)+
-            //fos.write(out.getBytes());
-            //fos.close();
             File file = new File(context.getExternalFilesDir(null)+fileName);
 
             BufferedOutputStream bOut = new BufferedOutputStream(new FileOutputStream(file));
