@@ -100,14 +100,14 @@ public class ReadWrite {
      * <p/>
      * --------------------------------------------------------------
      */
-    public void writeCSV(Context context, String fileName, ArrayList<Double> wav)
+    public void writeCSV(Context context, String fileName, String out) //ArrayList<Double> wav)
     {
 
-        String out = "";
+        /*String out = "";
         for (double idx : wav)
         {
             out += Double.toString(idx) + ",";
-        }
+        }*/
 
         try {
             File file = new File(context.getExternalFilesDir(null)+fileName);

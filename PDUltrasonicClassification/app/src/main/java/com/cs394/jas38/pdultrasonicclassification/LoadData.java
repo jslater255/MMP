@@ -27,8 +27,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import static android.view.View.INVISIBLE;
@@ -142,7 +144,7 @@ public class LoadData extends ActionBarActivity {
                 File file = new File(context.getExternalFilesDir(null), "/ea.wav");
                 Context appContext = getApplicationContext();
                 MediaPlayer mp = MediaPlayer.create(appContext, Uri.fromFile(file));
-                mp.start();
+               // mp.start();
 
                 openWav();
             }
@@ -172,7 +174,6 @@ public class LoadData extends ActionBarActivity {
 
     // convert two bytes to one double in the range -1 to 1
     static double bytesToDouble(byte firstByte, byte secondByte) {
-        short eight = 8;
         // convert two bytes to one short (little endian)
         int s = (secondByte << 8) | firstByte;
         // convert to range from -1 to (just below) 1
@@ -184,7 +185,6 @@ public class LoadData extends ActionBarActivity {
     {
         File file = new File(context.getExternalFilesDir(null), "/ea.wav");
         FileInputStream fileInputStream=null;
-        double[] left; double[] right;
         byte[] wav = new byte[(int) file.length()];
         //convert file into array of bytes
         try {
@@ -195,9 +195,16 @@ public class LoadData extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        // Determine if mono or stereo
-        int channels = wav[22];     // Forget byte 23 as 99.999% of WAVs are 1 or 2 channels
 
+
+        Double[] doubles = new Double[wav.length / 2];
+        for (int i = 0, j = 0; i != doubles.length; ++i, j += 4) {
+            doubles[i] = bytesToDouble(wav[i],wav[i+1]);
+        }
+
+        System.out.println(Arrays.toString(doubles));
+        rw.writeCSV(context,"testingOut.csv", Arrays.toString(doubles));
+        /*
         // Get past all the other sub chunks to get to the data subchunk:
         int pos = 12;   // First Subchunk ID from 12 to 16
 
@@ -209,30 +216,17 @@ public class LoadData extends ActionBarActivity {
         }
         pos += 8;
 
-        // Pos is now positioned to start of actual sound data.
-        int samples = (wav.length - pos)/2;     // 2 bytes per sample (16 bit sound mono)
-        if (channels == 2) samples /= 2;        // 4 bytes per sample (16 bit stereo)
-
-        // Allocate memory (right will be null if only mono sound)
-        left = new double[samples];
-        if (channels == 2) right = new double[samples];
-        else right = null;
-
         // Write to double array/s:
         ArrayList<Double> wavOut = new ArrayList<>();
-        System.out.println(wav.length);
-        while (pos < wav.length) {
-            System.out.println(wav.length + "");
-            //wavOut.add(bytesToDouble(wav[pos], wav[pos + 1]));
+        System.out.println(wav.length/2);
+        System.out.println(pos);
+        while (pos < 6000) {
+            //System.out.println("Position: " + pos + " -- " + bytesToDouble(wav[pos], wav[pos + 1]));
+            wavOut.add(bytesToDouble(wav[pos], wav[pos + 1]));
             pos += 2;
-            /*
-            If we have two channels will need to implement this
-            if (channels == 2) {
-                right[i] = bytesToDouble(wav[pos], wav[pos + 1]);
-                pos += 2;
-            }*/
         }
-        //rw.writeCSV(context,"testingOut.csv", wavOut);
+        rw.writeCSV(context,"testingOut.csv", wavOut);
+        */
     }
 
     /**
