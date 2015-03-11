@@ -56,11 +56,10 @@ JNIEXPORT jstring JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker
     /* Open the WAV file. */
     info.format = 0;
     sf = sf_open(str,SFM_READ,&info);
-    if (sf == NULL)
-    {
-        (*env)->NewStringUTF(env, "Failed");
-    }
-    (*env)->NewStringUTF(env, "Not Failed");
 
+    char string[15];
+    sprintf(string, "%d", info.channels);
+
+    (*env)->NewStringUTF(env, string);
 
   }
