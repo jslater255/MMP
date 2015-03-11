@@ -13,25 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.lang.reflect.Array;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Logger;
 
 import static android.view.View.INVISIBLE;
 
@@ -54,6 +45,7 @@ public class LoadData extends ActionBarActivity {
 
     ReadWrite rw;
     StatCalculator st;
+    Broker broker;
     ArrayList<Double> wav = new ArrayList<>();
     Context context;
 
@@ -117,10 +109,17 @@ public class LoadData extends ActionBarActivity {
         rw = new ReadWrite();
         // Creates an instance of the StatCalculator class
         st = new StatCalculator();
+        // Create instance of the Broker class
+        broker = new Broker();
 
         // Sets the Context to this so it can be passed to other classes that need to update or
         // have access to the screen
         context = this;
+
+        broker.brokerCallIntNative(context);
+        broker.brokerCallNative(context);
+        System.out.println("Path File: " + context.getExternalFilesDir(null) + "/ea.csv");
+        broker.brokerCallNativeOpenFile(context, context.getExternalFilesDir(null) + "/ea.wav");
 
         // Gets the progress wheel in the xml file to be able to set
         // invisible once the graph is ready to load.
@@ -159,11 +158,11 @@ public class LoadData extends ActionBarActivity {
         // set manual X bounds
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(200);
+        graph.getViewport().setMaxX(2000);
         // set manual Y bounds
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(-1);
-        graph.getViewport().setMaxY(1);
+        //graph.getViewport().setYAxisBoundsManual(true);
+        //graph.getViewport().setMinY(-1);
+        //graph.getViewport().setMaxY(1);
 
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScalable(true);
@@ -183,50 +182,6 @@ public class LoadData extends ActionBarActivity {
     // Returns left and right double arrays. 'right' will be null if sound is mono.
     public void openWav()
     {
-        File file = new File(context.getExternalFilesDir(null), "/ea.wav");
-        FileInputStream fileInputStream=null;
-        byte[] wav = new byte[(int) file.length()];
-        //convert file into array of bytes
-        try {
-            fileInputStream = new FileInputStream(file);
-            fileInputStream.read(wav);
-            fileInputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-        Double[] doubles = new Double[wav.length / 2];
-        for (int i = 0, j = 0; i != doubles.length; ++i, j += 4) {
-            doubles[i] = bytesToDouble(wav[i],wav[i+1]);
-        }
-
-        System.out.println(Arrays.toString(doubles));
-        rw.writeCSV(context,"testingOut.csv", Arrays.toString(doubles));
-        /*
-        // Get past all the other sub chunks to get to the data subchunk:
-        int pos = 12;   // First Subchunk ID from 12 to 16
-
-        // Keep iterating until we find the data chunk (i.e. 64 61 74 61 ...... (i.e. 100 97 116 97 in decimal))
-        while(!(wav[pos]==100 && wav[pos+1]==97 && wav[pos+2]==116 && wav[pos+3]==97)) {
-            pos += 4;
-            int chunkSize = wav[pos] + wav[pos + 1] * 256 + wav[pos + 2] * 65536 + wav[pos + 3] * 16777216;
-            pos += 4 + chunkSize;
-        }
-        pos += 8;
-
-        // Write to double array/s:
-        ArrayList<Double> wavOut = new ArrayList<>();
-        System.out.println(wav.length/2);
-        System.out.println(pos);
-        while (pos < 6000) {
-            //System.out.println("Position: " + pos + " -- " + bytesToDouble(wav[pos], wav[pos + 1]));
-            wavOut.add(bytesToDouble(wav[pos], wav[pos + 1]));
-            pos += 2;
-        }
-        rw.writeCSV(context,"testingOut.csv", wavOut);
-        */
     }
 
     /**
