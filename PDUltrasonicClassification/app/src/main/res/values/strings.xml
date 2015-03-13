@@ -8,4 +8,5 @@
     <string name="STAN_DEV">Standard Deviation:</string>
     <string name="PLAY">Play</string>
     <string name="LOAD_DATA">Load Data</string>
+    <string name="LOAD_DATA_TITLE">View Data</string>
 </resources>

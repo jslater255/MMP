@@ -44,7 +44,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //Sets the title of the screen
         this.setTitle("Main Menu");
     }
@@ -92,12 +91,11 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings)
+        {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -106,22 +104,18 @@ public class MainActivity extends ActionBarActivity {
      * <p/>
      * CALL NAME     : loadDataScreen
      * <p/>
-     * FUNCTION      : Once it is clicked from the main screen, it
-     *                 loads the LoadData Class
+     * FUNCTION      : Called when the user clicks the Load Data button.
      * <p/>
-     * INPUTS        :
+     * INPUTS        : View from screen.
      * <p/>
-     * OUTPUTS       :
+     * OUTPUTS       : Loads the LoadData Class.
      * <p/>
      * AMENDMENTS    :  Created by, James Slater
      * <p/>
      * --------------------------------------------------------------
      */
-    /** Called when the user clicks the OK button */
     public void loadDataScreen(View view) {
         Intent intent = new Intent(this, LoadData.class);
-        //EditText editText = (EditText) findViewById(R.id.userName);
-        //String message = editText.getText().toString();
         startActivity(intent);
     }
 }

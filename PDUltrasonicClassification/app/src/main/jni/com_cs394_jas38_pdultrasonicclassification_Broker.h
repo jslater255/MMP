@@ -28,7 +28,7 @@ JNIEXPORT jint JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker_ca
  * Method:    CallNativeOpenFile
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker_CallNativeOpenFile
+JNIEXPORT jdoubleArray JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker_CallNativeOpenFile
   (JNIEnv *, jobject, jstring);
 
 #ifdef __cplusplus

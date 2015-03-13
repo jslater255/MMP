@@ -13,15 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import static android.view.View.INVISIBLE;
@@ -29,45 +26,31 @@ import static android.view.View.INVISIBLE;
 /**
  * ---------------------------------------------------------------
  * <p/>
- * CALL NAME     :
+ * CALL NAME     : LoadData
  * <p/>
- * FUNCTION      :
+ * FUNCTION      : The Load data screen
  * <p/>
  * INPUTS        :
  * <p/>
- * OUTPUTS       :
+ * OUTPUTS       : inflates the LoadData.xml file
  * <p/>
  * AMENDMENTS    :  Created by, James Slater
  * <p/>
  * --------------------------------------------------------------
  */
-public class LoadData extends ActionBarActivity {
-
-    ReadWrite rw;
-    StatCalculator st;
-    Broker broker;
-    ArrayList<Double> wav = new ArrayList<>();
-    Context context;
-
-    GraphView graph;
-
-    ProgressBar mProgress;
-
-    TextView avg_out;
-    TextView stan_dev;
-
-    Button playBtn;
-
-    // Need handler for callbacks to the UI thread
+public class LoadData extends ActionBarActivity
+{
+    /**
+     * Need handler for callbacks to the UI thread
+     */
     final Handler mHandler = new Handler();
-
-    // Create runnable for posting
     /**
      * ---------------------------------------------------------------
      * <p/>
-     * CALL NAME     :
+     * CALL NAME     : mUpdateResults
      * <p/>
-     * FUNCTION      :
+     * FUNCTION      : Once the thread has finished it call the updateResultsInUi.
+     *                  Runnable for posting back to the UI
      * <p/>
      * INPUTS        :
      * <p/>
@@ -77,11 +60,46 @@ public class LoadData extends ActionBarActivity {
      * <p/>
      * --------------------------------------------------------------
      */
-    final Runnable mUpdateResults = new Runnable() {
-        public void run() {
+    final Runnable mUpdateResults = new Runnable()
+    {
+        public void run()
+        {
             updateResultsInUi();
         }
     };
+    /**
+     * All the instances of used classes
+     */
+    ReadWrite rw;
+    StatCalculator st;
+    Broker broker;
+    /**
+     * This will hold the converted WAV file information
+     */
+    ArrayList<Double> wav = new ArrayList<>();
+    /**
+     * The local context to make it easier to pass to other classes.
+     * I have done this as it reads a lot better to pass 'context' rather than this.
+     */
+    Context context;
+    /**
+     * From com.jjoe64.graphview.GraphView this is used for a pointer to the place
+     * in the LoadData.xml file
+     */
+    GraphView graph;
+    /**
+     * A pointer to an android progress swirl
+     */
+    ProgressBar mProgress;
+    /**
+     * Pointers to the TextView sections in the xml file
+     */
+    TextView avg_out;
+    TextView stan_dev;
+    /**
+     * Pointer to the Button in the xml file
+     */
+    Button playBtn;
 
     /**
      * ---------------------------------------------------------------
@@ -90,99 +108,122 @@ public class LoadData extends ActionBarActivity {
      * <p/>
      * FUNCTION      : inflates the activity_load_data.xml UI file
      * <p/>
-     * INPUTS        :
+     * INPUTS        : Bundle savedInstanceState
      * <p/>
-     * OUTPUTS       :
+     * OUTPUTS       : Inflates the LoadData.xml file
      * <p/>
      * AMENDMENTS    :  Created by, James Slater
      * <p/>
      * --------------------------------------------------------------
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_load_data);
-        this.setTitle("View Data");
-
-        // Creates instance of the ReadWrite class to read the CSV file
+        /**
+         * Sets the Title of the screen
+         * Gets it from the R.string file
+         */
+        this.setTitle(getString(R.string.LOAD_DATA_TITLE));
+        /**
+         * Creates instance of the ReadWrite class to read the CSV file
+         */
         rw = new ReadWrite();
-        // Creates an instance of the StatCalculator class
+        /**
+         * Creates an instance of the StatCalculator class
+         */
         st = new StatCalculator();
-        // Create instance of the Broker class
+        /**
+         * Create instance of the Broker class
+         */
         broker = new Broker();
-
-        // Sets the Context to this so it can be passed to other classes that need to update or
-        // have access to the screen
+        /**
+         * Sets the Context to this so it can be passed to other classes that
+         * need to update or have access to the screen
+         */
         context = this;
-
-        broker.brokerCallIntNative(context);
-        broker.brokerCallNative(context);
-        System.out.println("Path File: " + context.getExternalFilesDir(null) + "/ea.csv");
-        broker.brokerCallNativeOpenFile(context, context.getExternalFilesDir(null) + "/ea.wav");
-
-        // Gets the progress wheel in the xml file to be able to set
-        // invisible once the graph is ready to load.
+        /**
+         * Gets the progress wheel in the xml file to be able to set
+         * invisible once the graph is ready to load.
+         */
         mProgress = (ProgressBar) findViewById(R.id.progBar);
-
-
-        //startLoadingCSV();
-
-        // Gets a pointer the the TextView from the XML
+        /**
+         * This starts the thread to run the reading of the WAV file
+         */
+        startLoadingCSV();
+        /**
+         * Gets a pointer the the TextView from the XML
+         */
         avg_out = (TextView) findViewById(R.id.avg_out);
-        // Gets a pointer the the TextView from the XML
+        /**
+         * Gets a pointer the the TextView from the XML
+         */
         stan_dev = (TextView) findViewById(R.id.stan_dev_out);
-
-        // Gets a pointer the the Button from the XML
+        /**
+         * Gets a pointer the the Button from the XML
+         */
         playBtn = (Button) findViewById(R.id.playWAV);
-
-        // Adds a listener to the play button to play back th wav file.
-        playBtn.setOnClickListener(new View.OnClickListener() {
+        /**
+         * Adds a listener to the play button to play back th wav file.
+         */
+        playBtn.setOnClickListener(new View.OnClickListener()
+        {
+            /**
+             * ---------------------------------------------------------------
+             * <p/>
+             * CALL NAME     : onClick
+             * <p/>
+             * FUNCTION      :
+             * <p/>
+             * INPUTS        :
+             * <p/>
+             * OUTPUTS       :
+             * <p/>
+             * AMENDMENTS    :  Created by, James Slater
+             * <p/>
+             * --------------------------------------------------------------
+             */
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 File file = new File(context.getExternalFilesDir(null), "/ea.wav");
                 Context appContext = getApplicationContext();
                 MediaPlayer mp = MediaPlayer.create(appContext, Uri.fromFile(file));
-               // mp.start();
-
-                openWav();
+                mp.start();
             }
         });
-
-        //Gets previous intent from MainActivity
+        /**
+         * Gets previous intent from MainActivity
+         */
         Intent intent = getIntent();//
-
-        // Gets a pointer the the Graph from the XML
+        /**
+         * Gets a pointer the the Graph from the XML
+         */
         graph = (GraphView) findViewById(R.id.graph);
-
-        // set manual X bounds
+        /**
+         * Set manual X bounds
+         */
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(2000);
-        // set manual Y bounds
-        //graph.getViewport().setYAxisBoundsManual(true);
-        //graph.getViewport().setMinY(-1);
-        //graph.getViewport().setMaxY(1);
-
+        graph.getViewport().setMaxX(200);
+        /**
+         * Set manual Y bounds
+         */
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(-1);
+        graph.getViewport().setMaxY(1);
+        /**
+         * Allow the user to scroll through the grpah and be able to set the scale of the X axis
+         */
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScalable(true);
-        // Turn the graph to not visible as it has no data.
-        // It will be visible once the thread has loaded the CSV file
+        /**
+         * Turn the graph to not visible as it has no data.
+         * It will be visible once the thread has loaded the CSV file
+         */
         graph.setVisibility(INVISIBLE);
-    }
-
-    // convert two bytes to one double in the range -1 to 1
-    static double bytesToDouble(byte firstByte, byte secondByte) {
-        // convert two bytes to one short (little endian)
-        int s = (secondByte << 8) | firstByte;
-        // convert to range from -1 to (just below) 1
-        return s / 32768.0;
-    }
-
-    // Returns left and right double arrays. 'right' will be null if sound is mono.
-    public void openWav()
-    {
-    }
+    }/* End of onCreate */
 
     /**
      * ---------------------------------------------------------------
@@ -200,11 +241,14 @@ public class LoadData extends ActionBarActivity {
      * --------------------------------------------------------------
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        /**
+         * Inflate the menu; this adds items to the action bar if it is present.
+         */
         getMenuInflater().inflate(R.menu.menu_activity2, menu);
         return true;
-    }
+    }/* End of onCreateOptionsMenu */
 
     /**
      * ---------------------------------------------------------------
@@ -217,24 +261,28 @@ public class LoadData extends ActionBarActivity {
      * <p/>
      * OUTPUTS       :
      * <p/>
-     * AMENDMENTS    :  Created by, James Slater
+     * AMENDMENTS    : Created by, James Slater
      * <p/>
      * --------------------------------------------------------------
      */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        /**
+         * Handle action bar item clicks here. The action bar will automatically
+         * handle clicks on the Home/Up button, so long as you specify a
+         * parent activity in AndroidManifest.xml.
+         */
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /**
+         * noinspection SimplifiableIfStatement
+         */
+        if (id == R.id.action_settings)
+        {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
+    }/* End of onOptionsItemSelected */
 
     /**
      * ---------------------------------------------------------------
@@ -244,20 +292,39 @@ public class LoadData extends ActionBarActivity {
      * FUNCTION      : Creates a thread to load the CSV file. This is needed as it is
      *                  a very big file and it allows the UI thread to stay responsive
      * <p/>
-     * INPUTS        :
+     * INPUTS        : Null
      * <p/>
-     * OUTPUTS       :
+     * OUTPUTS       : Void
      * <p/>
      * AMENDMENTS    :  Created by, James Slater
      * <p/>
      * --------------------------------------------------------------
      */
-    protected void startLoadingCSV() {
-
-        // Fire off a thread to do some work that we shouldn't do directly in the UI thread
-        Thread t = new Thread() {
-            public void run() {
-                wav = rw.readCSV(context, "/ea.csv");
+    protected void startLoadingCSV()
+    {
+        /**
+         * Fire off a thread to do some work that we shouldn't do directly in the UI thread
+         */
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+                //wav = rw.readCSV(context, "/ea.csv");
+                /**
+                 * Calls the running average method in the statCalculator and passes in:-
+                 *  - The size of the FIFO list 50 is standard.
+                 *  - A double array, by calling:-
+                 *      - The Broker class to to get the Native C code to read the audio file.
+                 *          This return the converted audio WAV file as an double array.
+                 */
+                wav = st.run_avg(50, broker.CallNativeOpenFile(context.getExternalFilesDir(null) + "/ea.wav"));
+                /**
+                 * We pass the wav ArrayList to countCrossZero to find all the spikes and their features.
+                 */
+                st.countCrossZero(wav);
+                /**
+                 * Once the above code has been completed we call mUpdateResults.
+                 */
                 mHandler.post(mUpdateResults);
             }
         };
@@ -269,42 +336,50 @@ public class LoadData extends ActionBarActivity {
      * <p/>
      * CALL NAME     : updateResultsInUi
      * <p/>
-     * FUNCTION      : Once the thread has returned we update the UI
+     * FUNCTION      : This is called once the Thread had returned finishing its tasks.
+     *                  Once the thread has returned we update the UI.
      * <p/>
-     * INPUTS        :
+     * INPUTS        : Null
      * <p/>
-     * OUTPUTS       :
+     * OUTPUTS       : void
      * <p/>
      * AMENDMENTS    :  Created by, James Slater
      * <p/>
      * --------------------------------------------------------------
      */
-    private void updateResultsInUi() {
-
-        // Back in the UI thread -- update our UI elements based on the data in mResults
-
-        DataPoint[] data = new DataPoint[wav.size()-1];
-        for (int idx=0; idx < (wav.size()-1); idx++)
+    private void updateResultsInUi()
+    {
+        /**
+         * Back in the UI thread -- update our UI elements based on the data in mResults.
+         */
+        DataPoint[] data = new DataPoint[wav.size() - 1];
+        for (int idx = 0; idx < (wav.size() - 1); idx++)
         {
-            //we put idx by 0.6 as that is how many milliseconds there are for each point
+            /**
+             * We put idx by 0.6 as that is how many milliseconds there are for each point.
+             */
             //data[idx] = new DataPoint((0.6*idx), st.getSlope(wav.get(idx),wav.get(idx+1),idx));// To see the DY/DX plot
             data[idx] = new DataPoint(idx, wav.get(idx));
-
         }
-
-        // Creates a series to add the to the graph
+        /**
+         * Creates a series to add the to the graph.
+         */
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(data);
         graph.addSeries(series);
-        // Sets the Graph to visible and the progress wheel to invisible
+        /**
+         * Sets the Graph to visible and the progress wheel to invisible.
+         */
         graph.setVisibility(View.VISIBLE);
         mProgress.setVisibility(INVISIBLE);
-
-        // Gets some stats from the array loaded
+        /**
+         * Gets some information from the array loaded.
+         */
         Double avg = st.avg(wav);
+        /**
+         * Converts the doubles to 4 decimal places and String.
+         */
         avg_out.setText(fourDecPla(avg));
-        stan_dev.setText(fourDecPla(st.stand_dev(avg,wav)));
-
-        st.countCrossZero(wav, context);
+        stan_dev.setText(fourDecPla(st.stand_dev(avg, wav)));
     }
 
     /**
@@ -312,20 +387,21 @@ public class LoadData extends ActionBarActivity {
      * <p/>
      * CALL NAME     : fourDecPla
      * <p/>
-     * FUNCTION      :
+     * FUNCTION      : To take a Double round it to 4 decimal places and return it as a String.
      * <p/>
-     * INPUTS        : Double val to convert to 2 decimal places
+     * INPUTS        : Double val double to convert to 4 decimal places.
      * <p/>
-     * OUTPUTS       : returns a string of the double number
+     * OUTPUTS       : Returns the converted double as a string.
      * <p/>
      * AMENDMENTS    : Created by, James Slater
      * <p/>
      * --------------------------------------------------------------
      */
-    public String fourDecPla(double val){
-
-        //sets the val double to string
-        //using 10000 gives 4 decimal places
-        return Double.toString(Math.round(val*10000)/10000.0d);
+    public String fourDecPla(double val)
+    {
+        /**
+         * Sets the val double to string using 10000 gives 4 decimal places.
+         */
+        return Double.toString(Math.round(val * 10000) / 10000.0d);
     }
 }

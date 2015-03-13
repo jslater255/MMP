@@ -9,8 +9,6 @@
 #include <errno.h>
 #include "com_cs394_jas38_pdultrasonicclassification_Broker.h"
 
-
-
 /*
  * Class:     com_cs394_jas38_pdultrasonicclassification_Broker
  * Method:    callNative
@@ -39,17 +37,11 @@ JNIEXPORT jint JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker_ca
  * Method:    CallNativeOpenFile
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker_CallNativeOpenFile
+JNIEXPORT jdoubleArray JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker_CallNativeOpenFile
   (JNIEnv *env, jobject obj, jstring filePath){
 
-    //SNDFILE* 	sf_open		(const char *path, int mode, SF_INFO *sfinfo) ;
-    char buff[100];
-    memset(buff,0,sizeof(buff));
-    char buf[128];
     const char *str = (*env)->GetStringUTFChars(env, filePath, 0);
     //"/storage/emulated/0/Android/data/com.cs394.jas38.pdultrasonicclassification/files/test.csv"
-    //FILE* file = fopen(str,"r");
-
     SNDFILE *sf;
     SF_INFO info;
 
@@ -58,8 +50,23 @@ JNIEXPORT jstring JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker
     sf = sf_open(str,SFM_READ,&info);
 
     char string[15];
-    sprintf(string, "%d", info.channels);
 
-    (*env)->NewStringUTF(env, string);
+    int num_items, i, j, c;
+    num_items = info.channels * info.frames;
+    c = info.channels;
+
+    double *buf_double;
+    buf_double = (double *) malloc(num_items*sizeof(double));
+    int num = sf_read_double(sf,buf_double,num_items);
+    sf_close(sf);
+
+    sprintf(string, "%f", buf_double[0]);
+
+    jdoubleArray result;
+    result = (*env)->NewDoubleArray(env, num_items);
+
+    (*env)->SetDoubleArrayRegion(env, result, 0, num_items, buf_double);
+
+    return result;
 
   }

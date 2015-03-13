@@ -1,18 +1,12 @@
 package com.cs394.jas38.pdultrasonicclassification;
 
-import android.content.Context;
-import android.widget.Toast;
-
 /**
  * ---------------------------------------------------------------
  * <p/>
- * CALL NAME     :
+ * CALL NAME     : Broker
  * <p/>
- * FUNCTION      :
- * <p/>
- * INPUTS        :
- * <p/>
- * OUTPUTS       :
+ * FUNCTION      : This is the broker between the java side of the application
+ *                  and the native C/C++ code.
  * <p/>
  * AMENDMENTS    :  Created by, James Slater
  * <p/>
@@ -20,25 +14,83 @@ import android.widget.Toast;
  */
 public class Broker {
 
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     : Broker
+     * <p/>
+     * FUNCTION      : Constructor
+     * <p/>
+     * INPUTS        : Null
+     * <p/>
+     * OUTPUTS       : The instance of this class
+     * <p/>
+     * AMENDMENTS    : Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
     public Broker(){
-
     }
 
-    public void brokerCallNative(Context context){
-        Toast.makeText(context, callNative(), Toast.LENGTH_SHORT).show();
-    }
-
-    public void brokerCallIntNative(Context context){
-        Toast.makeText(context, "int " + callIntNative(), Toast.LENGTH_SHORT).show();
-    }
-
-    public void brokerCallNativeOpenFile(Context context,String filePath){
-        Toast.makeText(context, "File? == " + CallNativeOpenFile(filePath), Toast.LENGTH_SHORT).show();
-    }
-
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     : callNative
+     * <p/>
+     * FUNCTION      :
+     * <p/>
+     * INPUTS        :
+     * <p/>
+     * OUTPUTS       :
+     * <p/>
+     * AMENDMENTS    :  Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
     public native String callNative();
+
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     :
+     * <p/>
+     * FUNCTION      :
+     * <p/>
+     * INPUTS        :
+     * <p/>
+     * OUTPUTS       :
+     * <p/>
+     * AMENDMENTS    :  Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
     public native int callIntNative();
-    public native String CallNativeOpenFile(String filePath);
+
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     : CallNativeOpenFile
+     * <p/>
+     * FUNCTION      : It will load the audio file from the path that is passed in.
+     *                  It converts the audio file to a double array.
+     * <p/>
+     * INPUTS        : String filePath, is the full path to find the audio file you want to be opened.
+     *                  Example --
+     *                  "/storage/emulated/0/Android/data/com.cs394.jas38.pdultrasonicclassification/files/test.csv"
+     * <p/>
+     * OUTPUTS       : Double array, is the audio file as numbers. It creates the array
+     *                  from using the sndfile lib, all the files ate in the jni folder
+     * <p/>
+     * AMENDMENTS    :  Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
+    public native double[] CallNativeOpenFile(String filePath);
+
+    /**
+     * Loads the already made native library called 'Broker'.
+     * More information on this within ../../jni/Android.mk
+     */
     static
     {
         System.loadLibrary("Broker");
