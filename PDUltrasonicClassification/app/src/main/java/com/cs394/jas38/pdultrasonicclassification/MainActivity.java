@@ -6,6 +6,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import java.io.File;
+import java.util.Collections;
 
 /**
  * ---------------------------------------------------------------
@@ -24,6 +32,10 @@ import android.view.View;
  */
 public class MainActivity extends ActionBarActivity {
 
+    LinearLayout layoutOfPopup;
+    PopupWindow popupMessage;
+    Button popupButton, insidePopupButton;
+    TextView popupText;
 
     /**
      * ---------------------------------------------------------------
@@ -118,4 +130,5 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(this, LoadData.class);
         startActivity(intent);
     }
+
 }

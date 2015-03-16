@@ -76,7 +76,7 @@ public class Broker {
      * <p/>
      * INPUTS        : String filePath, is the full path to find the audio file you want to be opened.
      *                  Example --
-     *                  "/storage/emulated/0/Android/data/com.cs394.jas38.pdultrasonicclassification/files/test.csv"
+     *                  "/storage/emulated/0/Android/data/com.cs394.jas38.pdultrasonicclassification/files/test.wav"
      * <p/>
      * OUTPUTS       : Double array, is the audio file as numbers. It creates the array
      *                  from using the sndfile lib, all the files ate in the jni folder

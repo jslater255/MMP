@@ -195,7 +195,7 @@ public class StatCalculator
          */
         LinkedList<Double> fifo = new LinkedList<>();
         LinkedList<SpikeFeatureStruct> spikeList = new LinkedList<>();
-        //double lastPos = 0;
+        double lastPos = 0;
 
         for (int idx = 0; idx < (wav.size() - 1); idx++)
         {
@@ -214,9 +214,9 @@ public class StatCalculator
                      *  Cast to int so it rounds.
                      *  Makes sure the we do not find the same spike twice.
                      */
-                    if ((int) (spikeList.getLast().getCrossZeroPos() + 0.6) != (int) (0.6 * (idx - 5)))
+                    if ((int) (lastPos+ 0.6) != (int) (0.6 * (idx - 5)))
                     {
-                        //lastPos = (0.6 * (idx - 5));
+                        lastPos = (0.6 * (idx - 5));
                         spikeList.add(findSpikeFeatures(idx, wav));
                     }
                 }

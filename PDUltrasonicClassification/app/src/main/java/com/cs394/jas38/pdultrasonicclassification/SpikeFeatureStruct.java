@@ -195,7 +195,8 @@ public class SpikeFeatureStruct {
      * <p/>
      * CALL NAME     : workoutPeakStart
      * <p/>
-     * FUNCTION      :
+     * FUNCTION      : To find where the spike starts from the peak position.
+     *                  We check to find it
      * <p/>
      * INPUTS        :
      * <p/>
