@@ -2,8 +2,6 @@ package com.cs394.jas38.pdultrasonicclassification;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -13,13 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import static android.view.View.INVISIBLE;
 
@@ -76,7 +74,9 @@ public class LoadData extends ActionBarActivity
     /**
      * This will hold the converted WAV file information
      */
-    ArrayList<Double> wav = new ArrayList<>();
+
+    AudioStruct audioData;
+    Classifier classifier;
     /**
      * The local context to make it easier to pass to other classes.
      * I have done this as it reads a lot better to pass 'context' rather than this.
@@ -94,12 +94,15 @@ public class LoadData extends ActionBarActivity
     /**
      * Pointers to the TextView sections in the xml file
      */
-    TextView avg_out;
-    TextView stan_dev;
+    TextView smpl_rate,
+            cmptnes_avg, cmptnes_stan_dev,
+            spec_cen_avg, spec_cen_stand_dev;
     /**
      * Pointer to the Button in the xml file
      */
     Button playBtn;
+
+    DataPoint[] data;
 
     /**
      * ---------------------------------------------------------------
@@ -122,10 +125,18 @@ public class LoadData extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_data);
         /**
+         * Sets the Context to this so it can be passed to other classes that
+         * need to update or have access to the screen
+         */
+        context = this;
+        Intent intent = getIntent();
+        audioData = new AudioStruct(intent.getStringExtra("filename"));
+        Toast.makeText(context,audioData.getFileName(),Toast.LENGTH_SHORT).show();
+        /**
          * Sets the Title of the screen
          * Gets it from the R.string file
          */
-        this.setTitle(getString(R.string.LOAD_DATA_TITLE));
+        this.setTitle(getString(R.string.LOAD_DATA_TITLE) + ": " + audioData.getFileName());
         /**
          * Creates instance of the ReadWrite class to read the CSV file
          */
@@ -139,11 +150,6 @@ public class LoadData extends ActionBarActivity
          */
         broker = new Broker();
         /**
-         * Sets the Context to this so it can be passed to other classes that
-         * need to update or have access to the screen
-         */
-        context = this;
-        /**
          * Gets the progress wheel in the xml file to be able to set
          * invisible once the graph is ready to load.
          */
@@ -151,15 +157,18 @@ public class LoadData extends ActionBarActivity
         /**
          * This starts the thread to run the reading of the WAV file
          */
-        startLoadingCSV();
+        startLoadingWAV();
         /**
          * Gets a pointer the the TextView from the XML
          */
-        avg_out = (TextView) findViewById(R.id.avg_out);
+        smpl_rate = (TextView) findViewById(R.id.avg_out);
         /**
          * Gets a pointer the the TextView from the XML
          */
-        stan_dev = (TextView) findViewById(R.id.stan_dev_out);
+        cmptnes_avg = (TextView) findViewById(R.id.stan_dev_out);
+        cmptnes_stan_dev = (TextView) findViewById(R.id.compStandDev);
+        spec_cen_avg = (TextView) findViewById(R.id.specCenAvg);
+
         /**
          * Gets a pointer the the Button from the XML
          */
@@ -187,16 +196,10 @@ public class LoadData extends ActionBarActivity
             @Override
             public void onClick(View v)
             {
-                File file = new File(context.getExternalFilesDir(null), "/ea.wav");
-                Context appContext = getApplicationContext();
-                MediaPlayer mp = MediaPlayer.create(appContext, Uri.fromFile(file));
-                mp.start();
+                File audioFile = new File(context.getExternalFilesDir(null), "/"+ audioData.getFileName());
+                new AudioPlayback(context, audioFile);
             }
         });
-        /**
-         * Gets previous intent from MainActivity
-         */
-        Intent intent = getIntent();//
         /**
          * Gets a pointer the the Graph from the XML
          */
@@ -206,7 +209,7 @@ public class LoadData extends ActionBarActivity
          */
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(200);
+        graph.getViewport().setMaxX(250);
         /**
          * Set manual Y bounds
          */
@@ -214,7 +217,7 @@ public class LoadData extends ActionBarActivity
         graph.getViewport().setMinY(-1);
         graph.getViewport().setMaxY(1);
         /**
-         * Allow the user to scroll through the grpah and be able to set the scale of the X axis
+         * Allow the user to scroll through the graph and be able to set the scale of the X axis
          */
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScalable(true);
@@ -300,7 +303,7 @@ public class LoadData extends ActionBarActivity
      * <p/>
      * --------------------------------------------------------------
      */
-    protected void startLoadingCSV()
+    protected void startLoadingWAV()
     {
         /**
          * Fire off a thread to do some work that we shouldn't do directly in the UI thread
@@ -309,19 +312,20 @@ public class LoadData extends ActionBarActivity
         {
             public void run()
             {
-                //wav = rw.readCSV(context, "/ea.csv");
-                /**
-                 * Calls the running average method in the statCalculator and passes in:-
-                 *  - The size of the FIFO list 50 is standard.
-                 *  - A double array, by calling:-
-                 *      - The Broker class to to get the Native C code to read the audio file.
-                 *          This return the converted audio WAV file as an double array.
-                 */
-                wav = st.run_avg(50, broker.CallNativeOpenFile(context.getExternalFilesDir(null) + "/ea.wav"));
-                /**
-                 * We pass the wav ArrayList to countCrossZero to find all the spikes and their features.
-                 */
-                st.countCrossZero(wav);
+
+                audioData.setSampleRate(broker.CallNativeSampleRate(context.getExternalFilesDir(null) +"/"+ audioData.getFileName()));
+                audioData.setWavArray(broker.CallNativeOpenFile(context.getExternalFilesDir(null) +"/"+ audioData.getFileName()));
+
+                audioData.calFeatures();
+
+                data = new DataPoint[audioData.getWav().length - 1];
+                for (int idx = 0; idx < (audioData.getWav().length - 1); idx++)
+                {
+                    /**
+                     * We put idx by 0.6 as that is how many milliseconds there are for each point.
+                     */
+                    data[idx] = new DataPoint(idx, audioData.getWav()[idx]);
+                }
                 /**
                  * Once the above code has been completed we call mUpdateResults.
                  */
@@ -352,15 +356,6 @@ public class LoadData extends ActionBarActivity
         /**
          * Back in the UI thread -- update our UI elements based on the data in mResults.
          */
-        DataPoint[] data = new DataPoint[wav.size() - 1];
-        for (int idx = 0; idx < (wav.size() - 1); idx++)
-        {
-            /**
-             * We put idx by 0.6 as that is how many milliseconds there are for each point.
-             */
-            //data[idx] = new DataPoint((0.6*idx), st.getSlope(wav.get(idx),wav.get(idx+1),idx));// To see the DY/DX plot
-            data[idx] = new DataPoint(idx, wav.get(idx));
-        }
         /**
          * Creates a series to add the to the graph.
          */
@@ -374,12 +369,21 @@ public class LoadData extends ActionBarActivity
         /**
          * Gets some information from the array loaded.
          */
-        Double avg = st.avg(wav);
+        //Double avg = st.avg(wav);
         /**
          * Converts the doubles to 4 decimal places and String.
          */
-        avg_out.setText(fourDecPla(avg));
-        stan_dev.setText(fourDecPla(st.stand_dev(avg, wav)));
+        smpl_rate.setText(fourDecPla(audioData.getSampleRate()));
+        cmptnes_avg.setText(fourDecPla(audioData.getCompactnessAvg()));
+        cmptnes_stan_dev.setText(fourDecPla(audioData.getCompactnessStandDev()));
+        spec_cen_avg.setText(fourDecPla(audioData.getSpectralCentroidAvg()));
+        //spec_cen_stand_dev.setText(fourDecPla(audioData.getSpectralCentroidStandDev()));
+
+        classifier = new Classifier(audioData);
+
+        System.out.println("PD Value: " + classifier.getPercentPD());
+        System.out.println("Non PD Value: " + classifier.getPercentNonPD());
+
     }
 
     /**

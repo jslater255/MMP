@@ -20,6 +20,7 @@ public class SpikeFeatureStruct {
      * The local variables for each spike each is the x pos
      */
     private int crossZeroPos;
+    private double peakHeight;
     private int peakPos;
     private int peakStart;
     private int spikeLength;
@@ -85,6 +86,10 @@ public class SpikeFeatureStruct {
     public int getPeakPos()
     {
         return peakPos;
+    }
+
+    public double getPeakHeight() {
+        return peakHeight;
     }
 
     /**
@@ -182,6 +187,7 @@ public class SpikeFeatureStruct {
                     (wav.get(i) >= wav.get(i + 1)) && (wav.get(i + 1) >= wav.get(i + 2)))
             {
                 peakPos = i;
+                peakHeight = wav.get(i);
                 //System.out.println("Peak at: " + peakPos + " and cross zero at: " + crossZeroPos);
                 workoutPeakStart(wav);
                 setSpikeLength(wav);

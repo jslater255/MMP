@@ -17,6 +17,7 @@ obj/local/x86/objs/Broker/Broker.o: jni/Broker.c jni/sndfile.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/linux/types.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/machine/kernel.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/sys/sysmacros.h \
+ jni/complex.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/stdlib.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/string.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/malloc.h \
@@ -31,6 +32,15 @@ obj/local/x86/objs/Broker/Broker.o: jni/Broker.c jni/sndfile.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm/errno.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm-generic/errno.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm-generic/errno-base.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/math.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/limits.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/sys/limits.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/linux/limits.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/machine/internal_types.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/machine/limits.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/sys/syslimits.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm/page.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm/page_32.h \
  jni/com_cs394_jas38_pdultrasonicclassification_Broker.h
 
 jni/sndfile.h:
@@ -71,6 +81,8 @@ jni/sndfile.h:
 
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/sys/sysmacros.h:
 
+jni/complex.h:
+
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/stdlib.h:
 
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/string.h:
@@ -98,5 +110,23 @@ jni/sndfile.h:
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm-generic/errno.h:
 
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm-generic/errno-base.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/math.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/limits.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/sys/limits.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/linux/limits.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/machine/internal_types.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/machine/limits.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/sys/syslimits.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm/page.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-9/arch-x86/usr/include/asm/page_32.h:
 
 jni/com_cs394_jas38_pdultrasonicclassification_Broker.h:

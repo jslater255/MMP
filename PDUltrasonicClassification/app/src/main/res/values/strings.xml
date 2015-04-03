@@ -9,4 +9,6 @@
     <string name="PLAY">Play</string>
     <string name="LOAD_DATA">Load Data</string>
     <string name="LOAD_DATA_TITLE">View Data</string>
+    <string name="FILE_CHOOSER">File Chooser</string>
+    <string name="RECORD">Record</string>
 </resources>

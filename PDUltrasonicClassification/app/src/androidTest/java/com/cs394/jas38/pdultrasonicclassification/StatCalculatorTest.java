@@ -56,7 +56,7 @@ public class StatCalculatorTest extends TestCase {
 
     public void testCountCrossZero() throws Exception {
 
-        assertEquals("Cross Zero 0 ", 0, st.countCrossZero(wavTest, null));
+        assertEquals("Cross Zero 0 ", 0, st.countCrossZero(wavTest));
 
         wavTest.clear();
         // Create an array that slopes below zero with enough points
@@ -65,7 +65,7 @@ public class StatCalculatorTest extends TestCase {
             wavTest.add(idx);
         }
 
-        assertEquals("Cross zero 1 ", 1, st.countCrossZero(wavTest, null));
+        assertEquals("Cross zero 1 ", 1, st.countCrossZero(wavTest));
     }
 
     public void testGetSlope() throws Exception {

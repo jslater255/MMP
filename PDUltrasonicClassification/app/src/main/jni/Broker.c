@@ -1,4 +1,5 @@
 #include "sndfile.h"
+#include "complex.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,6 +8,8 @@
 #include <sndfile.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <stdio.h>
+#include <math.h>
 #include "com_cs394_jas38_pdultrasonicclassification_Broker.h"
 
 /*
@@ -70,3 +73,29 @@ JNIEXPORT jdoubleArray JNICALL Java_com_cs394_jas38_pdultrasonicclassification_B
     return result;
 
   }
+
+  /*
+   * Class:     com_cs394_jas38_pdultrasonicclassification_Broker
+   * Method:    CallNativeSampleRate
+   * Signature: (Ljava/lang/String;)I
+   */
+  JNIEXPORT jint JNICALL Java_com_cs394_jas38_pdultrasonicclassification_Broker_CallNativeSampleRate
+    (JNIEnv *env, jobject obj, jstring filePath){
+
+    const char *str = (*env)->GetStringUTFChars(env, filePath, 0);
+        //"/storage/emulated/0/Android/data/com.cs394.jas38.pdultrasonicclassification/files/test.csv"
+        SNDFILE *sf;
+        SF_INFO info;
+
+        /* Open the WAV file. */
+        info.format = 0;
+        sf = sf_open(str,SFM_READ,&info);
+
+        jint samp_rate = info.samplerate;
+
+        sf_close(sf);
+
+        return samp_rate;
+
+
+    }

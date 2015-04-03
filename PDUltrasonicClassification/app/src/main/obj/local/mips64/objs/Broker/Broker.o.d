@@ -18,6 +18,7 @@ obj/local/mips64/objs/Broker/Broker.o: jni/Broker.c jni/sndfile.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/asm/sgidefs.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/asm-generic/posix_types.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/sys/sysmacros.h \
+ jni/complex.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/stdlib.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/string.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/malloc.h \
@@ -32,6 +33,11 @@ obj/local/mips64/objs/Broker/Broker.o: jni/Broker.c jni/sndfile.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/linux/errno.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/asm/errno.h \
  /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/asm-generic/errno-base.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/math.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/limits.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/sys/limits.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/linux/limits.h \
+ /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/sys/syslimits.h \
  jni/com_cs394_jas38_pdultrasonicclassification_Broker.h
 
 jni/sndfile.h:
@@ -74,6 +80,8 @@ jni/sndfile.h:
 
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/sys/sysmacros.h:
 
+jni/complex.h:
+
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/stdlib.h:
 
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/string.h:
@@ -101,5 +109,15 @@ jni/sndfile.h:
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/asm/errno.h:
 
 /Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/asm-generic/errno-base.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/math.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/limits.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/sys/limits.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/linux/limits.h:
+
+/Users/Slaters/Desktop/android-ndk-r10d/platforms/android-21/arch-mips64/usr/include/sys/syslimits.h:
 
 jni/com_cs394_jas38_pdultrasonicclassification_Broker.h:

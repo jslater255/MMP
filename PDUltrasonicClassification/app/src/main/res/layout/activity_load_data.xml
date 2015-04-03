@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/avg_lbl"
-            android:text="@string/AVG_LBL"
+            android:text="Sample rate: "
             android:textAlignment="center"
             android:singleLine="true" />
     </LinearLayout>
@@ -83,7 +83,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/STAN_DEV"
+            android:text="Compactness Average: "
             android:id="@+id/stan_dev_lbl" />
     </LinearLayout>
 
@@ -102,5 +102,47 @@
             android:layout_gravity="center"
             android:gravity="center" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Compactness Stand dev: "
+        android:id="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignEnd="@+id/linearLayout2" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/compStandDev"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Spectral Centroid Average: "
+        android:id="@+id/textView5"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
+        android:layout_alignEnd="@+id/playWAV" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/specCenAvg"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5" />
 
 </RelativeLayout>

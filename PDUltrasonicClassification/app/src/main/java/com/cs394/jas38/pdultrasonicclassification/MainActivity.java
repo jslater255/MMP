@@ -7,13 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-
-import java.io.File;
-import java.util.Collections;
+import android.widget.Toast;
 
 /**
  * ---------------------------------------------------------------
@@ -31,11 +25,6 @@ import java.util.Collections;
  * --------------------------------------------------------------
  */
 public class MainActivity extends ActionBarActivity {
-
-    LinearLayout layoutOfPopup;
-    PopupWindow popupMessage;
-    Button popupButton, insidePopupButton;
-    TextView popupText;
 
     /**
      * ---------------------------------------------------------------
@@ -131,4 +120,53 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     :
+     * <p/>
+     * FUNCTION      :
+     * <p/>
+     * INPUTS        :
+     * <p/>
+     * OUTPUTS       :
+     * <p/>
+     * AMENDMENTS    :  Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
+    public void loadFileChooserScreen(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this, FileChooser.class);
+        try{
+            this.startActivity(intent);
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage() ,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     :
+     * <p/>
+     * FUNCTION      :
+     * <p/>
+     * INPUTS        :
+     * <p/>
+     * OUTPUTS       :
+     * <p/>
+     * AMENDMENTS    :  Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
+    public void recordScreenBtn(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this, Record.class);
+        try{
+            this.startActivity(intent);
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage() ,Toast.LENGTH_SHORT).show();
+        }
+    }
 }

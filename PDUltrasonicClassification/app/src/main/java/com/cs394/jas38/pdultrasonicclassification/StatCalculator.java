@@ -84,14 +84,14 @@ public class StatCalculator
      * <p/>
      * --------------------------------------------------------------
      */
-    public double avg(ArrayList<Double> wav)
+    public double avg(double[] wav)
     {
         double avg_out = 0;
         for (double idx : wav)
         {
             avg_out += idx;
         }
-        return (avg_out / wav.size());
+        return (avg_out / wav.length);
     }/* End of avg */
 
     /**
@@ -110,14 +110,18 @@ public class StatCalculator
      * <p/>
      * --------------------------------------------------------------
      */
-    public double stand_dev(double avg_int, ArrayList<Double> wav)
+    public double stand_dev(double[] wav)
     {
-        double sum_x_mean = 0.0;
-        for (double idx : wav)
+        if (wav.length  < 2)
+            return 0.0;
+        double average = avg(wav);
+        double sum = 0.0;
+        for (int i = 0; i < wav.length; i++)
         {
-            sum_x_mean += Math.pow((idx - avg_int), 2);
+            double diff = wav[i] - average;
+            sum = sum + diff * diff;
         }
-        return (sum_x_mean / (wav.size() - 1));
+        return Math.sqrt(sum / ((double) (wav.length - 1)));
     }/* End of stand_dev */
 
     /**
@@ -208,7 +212,7 @@ public class StatCalculator
                  *      - If the values have crossed zero.
                  *      - If the slope leading up to the crossing of zero is steep enough.
                  */
-                if (crossZero(fifo) && (getSlope(wav.get((idx - 5)), wav.get((idx - 15)), idx - 5, idx - 15) < -0.02))
+                if (crossZero(fifo) && (getSlope(wav.get((idx - 5)), wav.get((idx - 9)), idx - 5, idx - 9) < -0.02))
                 {
                     /**
                      *  Cast to int so it rounds.
@@ -222,6 +226,7 @@ public class StatCalculator
                 }
             }
         }
+
         System.out.println("Cross Zero: " + spikeList.size());
         /* TODO change this to just return the full list. */
         return spikeList.size();
@@ -287,5 +292,69 @@ public class StatCalculator
         }
         return check;
     }/* End of crossZero */
+
+    /**
+     * Returns the index of the entry of an array of doubles with the largest value.
+     * The first occurence is returned in the case of a tie.
+     */
+    public int getIndexOfLargest(double[] values)
+    {
+        int max_index = 0;
+        for (int i = 0; i < values.length; i++)
+            if (values[i] > values[max_index])
+                max_index = i;
+        return max_index;
+    }
+
+    /**
+     * If the given x is a power of the given n, then x is returned.
+     * If not, then the next value above the given x that is a power
+     * of n is returned.
+     *
+     * <p><b>IMPORTANT:</b> Both x and n must be greater than zero.
+     *
+     * @param	x	The value to ensure is a power of n.
+     * @param	n	The power to base x's validation on.
+     *
+     * Changed, by James Slater
+     */
+    public int ensureIsPowerOfN(int x, int n)
+    {
+        double log_value = logBaseN((double) x, (double) n);
+        int log_int = (int) log_value;
+        int valid_size = pow(n, log_int);
+        if (valid_size != x)
+            valid_size = pow(n, log_int + 1);
+        return valid_size;
+    }
+
+    /**
+     * Returns the logarithm of the specified base of the given number.
+     *
+     * <p><b>IMPORTANT:</b> Both x and n must be greater than zero.
+     *
+     * @param	x	The value to find the log of.
+     * @param	n	The base of the logarithm.
+     */
+    public double logBaseN(double x, double n)
+    {
+        return (Math.log10(x) / Math.log10(n));
+    }
+
+    /**
+     * Returns the given a raised to the power of the given b.
+     *
+     * <p><b>IMPORTANT:</b> b must be greater than zero.
+     *
+     * @param	a	The base.
+     * @param	b	The exponent.
+     */
+    public int pow(int a, int b)
+    {
+        int result = a;
+        for (int i = 1; i < b; i++)
+            result *= a;
+        return result;
+    }
 
 }/* End of the StatCalculator */

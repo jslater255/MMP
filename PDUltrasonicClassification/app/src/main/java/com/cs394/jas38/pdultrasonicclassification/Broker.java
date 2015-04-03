@@ -88,6 +88,26 @@ public class Broker {
     public native double[] CallNativeOpenFile(String filePath);
 
     /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     : CallNativeSampleRate
+     * <p/>
+     * FUNCTION      : It will load the audio file from the path that is passed in.
+     *                  It finds the sample rate of the audio file and return the number.
+     * <p/>
+     * INPUTS        : String filePath, is the full path to find the audio file you want to be opened.
+     *                  Example --
+     *                  "/storage/emulated/0/Android/data/com.cs394.jas38.pdultrasonicclassification/files/test.wav"
+     * <p/>
+     * OUTPUTS       : Integer of the sample rate of the audio file.
+     * <p/>
+     * AMENDMENTS    :  Created by, James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
+    public native int CallNativeSampleRate(String filePath);
+
+    /**
      * Loads the already made native library called 'Broker'.
      * More information on this within ../../jni/Android.mk
      */

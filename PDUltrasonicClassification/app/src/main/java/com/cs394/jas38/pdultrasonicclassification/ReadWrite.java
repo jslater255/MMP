@@ -49,7 +49,6 @@ public class ReadWrite {
     {
         ArrayList<Double> wav = new ArrayList<>();
         File file = new File(context.getExternalFilesDir(null), fileName);
-        Object out;
         System.out.println(context.getExternalFilesDir(null));
         try {
 

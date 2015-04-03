@@ -20,9 +20,22 @@
             android:name=".LoadData"
             android:label="@string/title_activity_activity2" >
         </activity>
-        <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    </application>
+        <activity
+            android:name=".FileChooser"
+            android:label="FileChooser" >
+        </activity>
+        <activity
+            android:name=".Record"
+            android:label="@string/RECORD" >
+        </activity>
+        <activity
+            android:name=".SaveAs"
+            android:label="Save As.." >
+        </activity>
 
+    </application>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
