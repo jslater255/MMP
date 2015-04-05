@@ -1,7 +1,15 @@
 package jAudio;
 
 /**
- * Created by Slaters on 02/04/15.
+ * A feature extractor that extracts the Spectral Rolloff Point. This is a
+ * measure measure of the amount of the right-skewedness of the power spectrum.
+ * <p>
+ * The spectral rolloff point is the fraction of bins in the power spectrum at
+ * which 85% of the power is at lower frequencies.
+ * <p>
+ * No extracted feature values are stored in objects of this class.
+ *
+ * @author Cory McKay
  */
 public class SpectralRolloffPoint extends Feature {
 

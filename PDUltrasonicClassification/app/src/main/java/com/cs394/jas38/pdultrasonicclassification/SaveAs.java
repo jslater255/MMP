@@ -15,53 +15,129 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Slaters on 25/03/15.
+ * ---------------------------------------------------------------
+ * <p/>
+ * CALL NAME     : SaveAs
+ * <p/>
+ * FUNCTION      : Extends ActionBarActivity, finds the tmp.wav
+ *                  file and renames it as the users input.
+ * <p/>
+ * AMENDMENTS    :  Created by: James Slater
+ * <p/>
+ * --------------------------------------------------------------
  */
 public class SaveAs extends ActionBarActivity
 {
+    /**
+     * The screens context
+     */
+    private Context context;
+    /**
+     * The pointers to the features within the xml screen.
+     */
+    private EditText fileNameInput;
+    private TextView timeDate;
+    private Button saveBtn;
+    /**
+     *
+     */
+    private String tmpFilePath, date, newFileName;
 
-    Context context;
-    EditText fileNameInput;
-    TextView timeDate;
-    Button saveBtn;
-    String tmpFilePath, date, newFileName;
-
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     : onCreate
+     * <p/>
+     * FUNCTION      : Inflate the save_tmp_wav_file.xml file and set the
+     *                  local variables to the relevant corresponding
+     *                  features
+     * <p/>
+     * INPUTS        :
+     * <p/>
+     * OUTPUTS       : A Save as screen onto the device.
+     * <p/>
+     * AMENDMENTS    :  Created by: James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**
+         * Loads the save_tmp_wav_file.xml file.
+         */
         setContentView(R.layout.save_tmp_wav_file);
+        /**
+         * Set the context.
+         */
         context = this;
-
+        /**
+         * Sets the variables to the relevant parts of the screen.
+         */
         fileNameInput = (EditText) findViewById(R.id.fileNameInput);
         timeDate = (TextView) findViewById(R.id.timeDate);
         saveBtn = (Button)  findViewById(R.id.saveBtn);
-
+        /**
+         * Sets a listener to the button SaveBtn.
+         * It call a private method changeName()
+         */
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeName();
-                Toast.makeText(context,"Changed name from " + tmpFilePath, Toast.LENGTH_SHORT).show();
-                Toast.makeText(context,"Changed name to " + newFileName, Toast.LENGTH_SHORT).show();
             }
         });
-
-
+        /**
+         * Gets today's date in the format 'YYYY_MM_DD'
+         * Sets the text of timeDate to show on the screen
+         */
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
         date = sdf.format(new Date());
         timeDate.setText(date);
-
+        /**
+         * Gets the intent to get the audio files name.
+         * Sets the local variable tmpFilePath to the name.
+         */
         Intent intent = getIntent();
         tmpFilePath = intent.getStringExtra("audioFileName");
     }
 
-    public void changeName(){
+    /**
+     * ---------------------------------------------------------------
+     * <p/>
+     * CALL NAME     : changeName
+     * <p/>
+     * FUNCTION      : Gets the users input of the file name, within
+     *                  the xml file it only allows certain digits and
+     *                  a certain reference length.
+     *                  If renameTo() returns true then it was
+     *                  successful and informs the user by sending a
+     *                  pop up message.
+     * <p/>
+     * INPUTS        : None
+     * <p/>
+     * OUTPUTS       : The tmp.wav file is renamed.
+     * <p/>
+     * AMENDMENTS    : Created by: James Slater
+     * <p/>
+     * --------------------------------------------------------------
+     */
+    private void changeName(){
+        /**
+         * Gets the input from the user.
+         */
         newFileName = fileNameInput.getText().toString();
-        //if(!newFileName.isEmpty()){
-            File from      = new File(context.getExternalFilesDir(null).getPath(), "/tmp.wav");
-            File to        = new File(context.getExternalFilesDir(null).getPath(),  "/" + newFileName + "_" + date + ".wav");
-            if(from.renameTo(to)){
-                Toast.makeText(context,"True", Toast.LENGTH_SHORT).show();
-            }
-        //}
+        File from      = new File(context.getExternalFilesDir(null).getPath(), "/tmp.wav");
+        File to        = new File(context.getExternalFilesDir(null).getPath(),  "/" + newFileName + "_" + date + ".wav");
+        /**
+         * Returns true if the file is renamed successfully.
+         */
+        if(from.renameTo(to))
+        {
+            Toast.makeText(context,"Changed name to " + newFileName, Toast.LENGTH_SHORT).show();
+        }else
+        {
+            Toast.makeText(context,"Failed to change name, try re-recording", Toast.LENGTH_SHORT).show();
+        }
     }
 }

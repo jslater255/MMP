@@ -15,8 +15,6 @@ package jAudio;
 public class SpectralCentroid extends Feature
 {
 	/* CONSTRUCTOR **************************************************************/
-
-
     /**
      * Basic constructor that sets the definition and dependencies (and their
      * offsets) of this feature.

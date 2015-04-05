@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -14,11 +13,8 @@ import android.widget.Toast;
  * <p/>
  * CLASS NAME    : MainActivity
  * <p/>
- * FUNCTION      : This is the main screen of the App
- * <p/>
- * INPUTS        :
- * <p/>
- * OUTPUTS       : uses the activity_main.xml as the corresponding UI
+ * FUNCTION      : This is the main screen of the App, uses the
+ *                  activity_main.xml as the corresponding UI
  * <p/>
  * AMENDMENTS    :  Created by, James Slater
  * <p/>
@@ -103,31 +99,13 @@ public class MainActivity extends ActionBarActivity {
     /**
      * ---------------------------------------------------------------
      * <p/>
-     * CALL NAME     : loadDataScreen
+     * CALL NAME     : loadFileChooserScreen
      * <p/>
-     * FUNCTION      : Called when the user clicks the Load Data button.
+     * FUNCTION      : To load the file chooser screen, will be
+     *                  called when the clicks on the button
      * <p/>
-     * INPUTS        : View from screen.
-     * <p/>
-     * OUTPUTS       : Loads the LoadData Class.
-     * <p/>
-     * AMENDMENTS    :  Created by, James Slater
-     * <p/>
-     * --------------------------------------------------------------
-     */
-    public void loadDataScreen(View view) {
-        Intent intent = new Intent(this, LoadData.class);
-        startActivity(intent);
-    }
-
-    /**
-     * ---------------------------------------------------------------
-     * <p/>
-     * CALL NAME     :
-     * <p/>
-     * FUNCTION      :
-     * <p/>
-     * INPUTS        :
+     * INPUTS        : View the current view of the screen for the
+     *                  new screen to start over
      * <p/>
      * OUTPUTS       :
      * <p/>
@@ -148,11 +126,13 @@ public class MainActivity extends ActionBarActivity {
     /**
      * ---------------------------------------------------------------
      * <p/>
-     * CALL NAME     :
+     * CALL NAME     : recordScreenBtn
      * <p/>
-     * FUNCTION      :
+     * FUNCTION      : To load the record screen when click by
+     *                  the button on screen
      * <p/>
-     * INPUTS        :
+     * INPUTS        : View the current view of the screen for the
+     *                  new screen to start over
      * <p/>
      * OUTPUTS       :
      * <p/>

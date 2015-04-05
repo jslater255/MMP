@@ -1,13 +1,27 @@
 package jAudio;
 
-/**
- * Created by Slaters on 01/04/15.
- */
+        /**
+        * A feature extractor that extracts the FFT power spectrum from a set of
+        * samples. This is a good measure of the power of different frequency
+        * components within a window.
+        *
+        * <p>The power spectrum is found by first calculating the FFT with a Hanning
+        * window. The magnitude spectrum value for each bin is found by first summing
+        * the squares of the real and imaginary components. The result is divided by
+        * the number of bins.
+        *
+        * <p>The dimensions of this feature depend on the number of FFT bins, which
+        * depend on the number of input samples. The dimensions are stored in the
+        * definition field are therefore 0, in order to indicate this variability.
+        *
+        * <p>No extracted feature values are stored in objects of this class.
+        *
+        * @author Cory McKay
+        */
+
 public class PowerSpectrum extends Feature {
 
     /* CONSTRUCTOR **************************************************************/
-
-
     /**
      * Basic constructor that sets the definition and dependencies (and their
      * offsets) of this feature.

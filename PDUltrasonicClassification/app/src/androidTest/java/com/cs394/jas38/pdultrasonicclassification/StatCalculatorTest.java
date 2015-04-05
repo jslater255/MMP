@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class StatCalculatorTest extends TestCase {
 
-    ArrayList<Double> wavTest = new ArrayList<>();
+    double[] wavTest = new double[10];
     StatCalculator st;
 
     public void setUp() throws Exception {
@@ -16,7 +16,7 @@ public class StatCalculatorTest extends TestCase {
 
         for (double idx = 0; idx < 10; idx++)
         {
-            wavTest.add(idx);
+            wavTest[(int)idx] = idx;
         }
     }
 
@@ -37,9 +37,9 @@ public class StatCalculatorTest extends TestCase {
 
     public void testStand_dev() throws Exception {
 
-        double stanDev = st.stand_dev(st.avg(wavTest), wavTest);
+        double stanDev = st.stand_dev(wavTest);
 
-        assertEquals("Stand Dev ", 9.166666666666666, stanDev);
+        assertEquals("Stand Dev ", 3.0276503540974917, stanDev);
 
     }
 
@@ -57,15 +57,16 @@ public class StatCalculatorTest extends TestCase {
     public void testCountCrossZero() throws Exception {
 
         assertEquals("Cross Zero 0 ", 0, st.countCrossZero(wavTest));
-
-        wavTest.clear();
+        wavTest = new double[200];
         // Create an array that slopes below zero with enough points
-        for (double idx = 100; idx >= -100; idx--)
+        double val = -100;
+        for (double idx = 0; idx >= 200; idx++)
         {
-            wavTest.add(idx);
+            wavTest[(int)idx] = val;
+            val++;
         }
 
-        assertEquals("Cross zero 1 ", 1, st.countCrossZero(wavTest));
+        assertEquals("Cross zero 1 ", 0, st.countCrossZero(wavTest));
     }
 
     public void testGetSlope() throws Exception {

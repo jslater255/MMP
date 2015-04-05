@@ -17,8 +17,6 @@ public class LoadDataUITest extends ActivityInstrumentationTestCase2<LoadData> {
     ArrayList<Double> wav;
     GraphView graph;
     ProgressBar mProgress;
-    TextView avg_out;
-    TextView stan_dev;
     Button playBtn;
 
     String fileName;
@@ -37,15 +35,9 @@ public class LoadDataUITest extends ActivityInstrumentationTestCase2<LoadData> {
 
         graph = (GraphView) ldActivity.findViewById(R.id.graph);
         mProgress = (ProgressBar) ldActivity.findViewById(R.id.progBar);
-        avg_out = (TextView) ldActivity.findViewById(R.id.avg_out);
-        stan_dev = (TextView) ldActivity.findViewById(R.id.stan_dev_out);
         playBtn = (Button) ldActivity.findViewById(R.id.playBackBtn);
 
         wav = new ArrayList<>();
 
-    }
-
-    public void testUI(){
-        assertNotNull(graph);
     }
 }

@@ -26,11 +26,7 @@ import static android.view.View.INVISIBLE;
  * <p/>
  * CALL NAME     : LoadData
  * <p/>
- * FUNCTION      : The Load data screen
- * <p/>
- * INPUTS        :
- * <p/>
- * OUTPUTS       : inflates the LoadData.xml file
+ * FUNCTION      : The Load data screen. Inflates the LoadData.xml file
  * <p/>
  * AMENDMENTS    :  Created by, James Slater
  * <p/>
@@ -94,9 +90,7 @@ public class LoadData extends ActionBarActivity
     /**
      * Pointers to the TextView sections in the xml file
      */
-    TextView smpl_rate,
-            cmptnes_avg, cmptnes_stan_dev,
-            spec_cen_avg, spec_cen_stand_dev;
+    TextView smpl_rate;
     /**
      * Pointer to the Button in the xml file
      */
@@ -155,20 +149,9 @@ public class LoadData extends ActionBarActivity
          */
         mProgress = (ProgressBar) findViewById(R.id.progBar);
         /**
-         * This starts the thread to run the reading of the WAV file
-         */
-        startLoadingWAV();
-        /**
          * Gets a pointer the the TextView from the XML
          */
-        smpl_rate = (TextView) findViewById(R.id.avg_out);
-        /**
-         * Gets a pointer the the TextView from the XML
-         */
-        cmptnes_avg = (TextView) findViewById(R.id.stan_dev_out);
-        cmptnes_stan_dev = (TextView) findViewById(R.id.compStandDev);
-        spec_cen_avg = (TextView) findViewById(R.id.specCenAvg);
-
+        smpl_rate = (TextView) findViewById(R.id.sample_rate_out);
         /**
          * Gets a pointer the the Button from the XML
          */
@@ -226,6 +209,10 @@ public class LoadData extends ActionBarActivity
          * It will be visible once the thread has loaded the CSV file
          */
         graph.setVisibility(INVISIBLE);
+        /**
+         * This starts the thread to run the reading of the WAV file
+         */
+        startLoadingWAV();
     }/* End of onCreate */
 
     /**
@@ -367,18 +354,12 @@ public class LoadData extends ActionBarActivity
         graph.setVisibility(View.VISIBLE);
         mProgress.setVisibility(INVISIBLE);
         /**
-         * Gets some information from the array loaded.
-         */
-        //Double avg = st.avg(wav);
-        /**
          * Converts the doubles to 4 decimal places and String.
          */
         smpl_rate.setText(fourDecPla(audioData.getSampleRate()));
-        cmptnes_avg.setText(fourDecPla(audioData.getCompactnessAvg()));
-        cmptnes_stan_dev.setText(fourDecPla(audioData.getCompactnessStandDev()));
-        spec_cen_avg.setText(fourDecPla(audioData.getSpectralCentroidAvg()));
-        //spec_cen_stand_dev.setText(fourDecPla(audioData.getSpectralCentroidStandDev()));
-
+        /**
+         *
+         */
         classifier = new Classifier(audioData);
 
         System.out.println("PD Value: " + classifier.getPercentPD());

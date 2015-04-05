@@ -17,11 +17,9 @@ import java.util.ArrayList;
  * <p/>
  * CALL NAME     : ReadWrite
  * <p/>
- * FUNCTION      :
- * <p/>
- * INPUTS        :
- * <p/>
- * OUTPUTS       :
+ * FUNCTION      : Was made to read and write CSV files. However
+ *                  no longer needed after further refactoring
+ *                  and design.
  * <p/>
  * AMENDMENTS    :  Created by, James Slater
  * <p/>

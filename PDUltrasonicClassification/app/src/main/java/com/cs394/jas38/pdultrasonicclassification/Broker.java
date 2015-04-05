@@ -35,40 +35,6 @@ public class Broker {
     /**
      * ---------------------------------------------------------------
      * <p/>
-     * CALL NAME     : callNative
-     * <p/>
-     * FUNCTION      :
-     * <p/>
-     * INPUTS        :
-     * <p/>
-     * OUTPUTS       :
-     * <p/>
-     * AMENDMENTS    :  Created by, James Slater
-     * <p/>
-     * --------------------------------------------------------------
-     */
-    public native String callNative();
-
-    /**
-     * ---------------------------------------------------------------
-     * <p/>
-     * CALL NAME     :
-     * <p/>
-     * FUNCTION      :
-     * <p/>
-     * INPUTS        :
-     * <p/>
-     * OUTPUTS       :
-     * <p/>
-     * AMENDMENTS    :  Created by, James Slater
-     * <p/>
-     * --------------------------------------------------------------
-     */
-    public native int callIntNative();
-
-    /**
-     * ---------------------------------------------------------------
-     * <p/>
      * CALL NAME     : CallNativeOpenFile
      * <p/>
      * FUNCTION      : It will load the audio file from the path that is passed in.

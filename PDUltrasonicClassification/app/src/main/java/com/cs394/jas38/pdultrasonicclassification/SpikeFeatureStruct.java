@@ -7,8 +7,10 @@ import java.util.ArrayList;
  * <p/>
  * CALL NAME     : SpikeFeatureStruct
  * <p/>
- * FUNCTION      : A struct for each spike found. It will hold the x pos of Start, Peak, Cross Zero
- *                  and overall length
+ * FUNCTION      : A struct for each spike found. It will hold
+ *                  the x pos of Start, Peak, Cross Zero and
+ *                  overall length. Now not needed after further
+ *                  design and refactoring
  * <p/>
  * AMENDMENTS    :  Created by, James Slater
  * <p/>

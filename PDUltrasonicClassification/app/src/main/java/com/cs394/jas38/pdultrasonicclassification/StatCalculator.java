@@ -8,7 +8,9 @@ import java.util.LinkedList;
  * <p/>
  * CLASS NAME    : StatCalculator
  * <p/>
- * FUNCTION      : All that statistical evaluation of the data is done.
+ * FUNCTION      : All that statistical evaluation of the data is
+ *                  done. It has some of my early spike work and
+ *                  some code used from jAudio.
  * <p/>
  * AMENDMENTS    :  Created by, James Slater
  * <p/>
@@ -21,7 +23,8 @@ public class StatCalculator
      * <p/>
      * CALL NAME     : run_avg
      * <p/>
-     * FUNCTION      : A running average of the newly loaded file
+     * FUNCTION      : A running average of the newly loaded file.
+     *                  Not Used.
      * <p/>
      * INPUTS        : Integer size, this is the number of doubles the FIFO list will hold.
      *                 Double array wav, is the information from the Audio file. it is called
@@ -140,13 +143,14 @@ public class StatCalculator
      * <p/>
      * --------------------------------------------------------------
      */
-    public SpikeFeatureStruct findSpikeFeatures(int crossZeroPoint, ArrayList<Double> wav)
+    public SpikeFeatureStruct findSpikeFeatures(int crossZeroPoint, double[] wav)
     {
         /**
          * Create a new Spike struct passing in the integer crossZeroPoint and the ArrayList wav.
          * Within the struct it will find all the features of a spike and return a complete struct.
          */
-        return new SpikeFeatureStruct(crossZeroPoint, wav);
+        //return new SpikeFeatureStruct(crossZeroPoint, wav);
+        return null;
     }/* End of findSpikeFeatures */
 
     /**
@@ -165,13 +169,13 @@ public class StatCalculator
      * <p/>
      * --------------------------------------------------------------
      */
-    public double variance(double avg, ArrayList<Double> wav)
+    public double variance(double avg, double[] wav)
     {
         double temp = 0;
         for (double idx : wav) {
             temp += Math.pow((idx - avg), 2);
         }
-        temp = temp / (wav.size() - 1);
+        temp = temp / (wav.length - 1);
         return Math.sqrt(temp);
     }/* End of variance */
 
@@ -190,7 +194,7 @@ public class StatCalculator
      * <p/>
      * --------------------------------------------------------------
      */
-    public int countCrossZero(ArrayList<Double> wav)
+    public int countCrossZero(double[] wav)
     {
         /**
          * Creates a FIFO list, to check in case we have crosses zero within the list.
@@ -201,9 +205,9 @@ public class StatCalculator
         LinkedList<SpikeFeatureStruct> spikeList = new LinkedList<>();
         double lastPos = 0;
 
-        for (int idx = 0; idx < (wav.size() - 1); idx++)
+        for (int idx = 0; idx < (wav.length - 1); idx++)
         {
-            fifo.add(wav.get(idx));
+            fifo.add(wav[idx]);
             if (fifo.size() > 10)
             {
                 fifo.removeFirst();
@@ -212,7 +216,7 @@ public class StatCalculator
                  *      - If the values have crossed zero.
                  *      - If the slope leading up to the crossing of zero is steep enough.
                  */
-                if (crossZero(fifo) && (getSlope(wav.get((idx - 5)), wav.get((idx - 9)), idx - 5, idx - 9) < -0.02))
+                if (crossZero(fifo) && (getSlope(wav[idx - 5], wav[idx - 9], idx - 5, idx - 9) < -0.02))
                 {
                     /**
                      *  Cast to int so it rounds.

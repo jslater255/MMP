@@ -10,23 +10,20 @@ import android.media.MediaRecorder;
 import android.media.MediaRecorder.AudioSource;
 import android.util.Log;
 
-
 /**
  * ---------------------------------------------------------------
  * <p/>
- * CALL NAME     :
+ * CALL NAME     : ExtAudioRecorder
  * <p/>
- * FUNCTION      :
- * <p/>
- * INPUTS        :
- * <p/>
- * OUTPUTS       :
+ * FUNCTION      : Records audio from the mic, and saves in a WAV
+ *                  format
  * <p/>
  * AMENDMENTS    :  Created by http://i-liger.com/article/android-wav-audio-recording
  *                  Found and used the class Denise had created.
- *                  I have been through the code and made some changes to efficiency
- *                  and updated some of the deprecated Audio format calls.
- *                  I also stripped out the methods that are not needed.
+ *                  I have been through the code and made some
+ *                  changes to efficiency and updated some of the
+ *                  deprecated Audio format calls. I also stripped
+ *                  out the methods that are not needed.
  * <p/>
  * --------------------------------------------------------------
  */
@@ -38,8 +35,7 @@ public class ExtAudioRecorder
     public static ExtAudioRecorder getInstanse()
     {
         ExtAudioRecorder result;
-
-            int i=0;
+        int i=0;
             do
             {
                 result = new ExtAudioRecorder(	true,
@@ -61,9 +57,6 @@ public class ExtAudioRecorder
      * STOPPED: reset needed
      */
     public enum State {INITIALIZING, READY, RECORDING, ERROR, STOPPED};
-
-    public static final boolean RECORDING_UNCOMPRESSED = true;
-    public static final boolean RECORDING_COMPRESSED = false;
 
     // The interval in which the recorded samples are output to the file
     // Used only in uncompressed mode
