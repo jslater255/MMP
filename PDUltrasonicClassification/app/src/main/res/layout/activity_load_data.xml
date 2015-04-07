@@ -89,6 +89,27 @@
         android:id="@+id/Classification_out"
         android:layout_alignTop="@+id/clasification"
         android:layout_alignEnd="@+id/linearLayout3"
-        android:layout_toEndOf="@+id/clasification" />
+        android:layout_toEndOf="@+id/clasification"
+        android:layout_above="@+id/certaintyOutLbl" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/CERTAINTY"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/clasification"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/certaintyOutLbl"
+        android:layout_alignEnd="@+id/Classification_out"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_alignStart="@+id/linearLayout3" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.cs394.jas38.pdultrasonicclassification;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,12 +37,7 @@ public class SaveAs extends ActionBarActivity
      * The pointers to the features within the xml screen.
      */
     private EditText fileNameInput;
-    private TextView timeDate;
-    private Button saveBtn;
-    /**
-     *
-     */
-    private String tmpFilePath, date, newFileName;
+    private String date;
 
     /**
      * ---------------------------------------------------------------
@@ -75,8 +71,8 @@ public class SaveAs extends ActionBarActivity
          * Sets the variables to the relevant parts of the screen.
          */
         fileNameInput = (EditText) findViewById(R.id.fileNameInput);
-        timeDate = (TextView) findViewById(R.id.timeDate);
-        saveBtn = (Button)  findViewById(R.id.saveBtn);
+        TextView timeDate = (TextView) findViewById(R.id.timeDate);
+        Button saveBtn = (Button) findViewById(R.id.saveBtn);
         /**
          * Sets a listener to the button SaveBtn.
          * It call a private method changeName()
@@ -94,12 +90,6 @@ public class SaveAs extends ActionBarActivity
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
         date = sdf.format(new Date());
         timeDate.setText(date);
-        /**
-         * Gets the intent to get the audio files name.
-         * Sets the local variable tmpFilePath to the name.
-         */
-        Intent intent = getIntent();
-        tmpFilePath = intent.getStringExtra("audioFileName");
     }
 
     /**
@@ -126,7 +116,7 @@ public class SaveAs extends ActionBarActivity
         /**
          * Gets the input from the user.
          */
-        newFileName = fileNameInput.getText().toString();
+        String newFileName = fileNameInput.getText().toString().trim();
         File from      = new File(context.getExternalFilesDir(null).getPath(), "/tmp.wav");
         File to        = new File(context.getExternalFilesDir(null).getPath(),  "/" + newFileName + "_" + date + ".wav");
         /**
@@ -135,6 +125,13 @@ public class SaveAs extends ActionBarActivity
         if(from.renameTo(to))
         {
             Toast.makeText(context,"Changed name to " + newFileName, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setClass(this, Record.class);
+            try{
+                this.startActivity(intent);
+            }catch (Exception e){
+                Toast.makeText(this, e.getMessage() ,Toast.LENGTH_SHORT).show();
+            }
         }else
         {
             Toast.makeText(context,"Failed to change name, try re-recording", Toast.LENGTH_SHORT).show();

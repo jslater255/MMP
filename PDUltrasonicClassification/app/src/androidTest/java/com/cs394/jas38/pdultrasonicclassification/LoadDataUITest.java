@@ -3,7 +3,6 @@ package com.cs394.jas38.pdultrasonicclassification;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;

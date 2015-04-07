@@ -11,25 +11,11 @@ public class LoadDataTest extends TestCase {
         ld = new LoadData();
     }
 
-    public void tearDown() throws Exception {
-
-    }
-
-    public void testStartLoadingCSV() throws Exception {
-
-
-    }
-
-    public void testStartLoadingWAV(){
-
-
-    }
-
     public void testFourDecPla() throws Exception {
 
         double test = 3.333333;
 
-        assertEquals("Test rounding to 4 decimal places", "3.3333", ld.fourDecPla(test));
+        assertEquals("Test rounding to 4 decimal places", "3.3333", ld.oneDecPla(test));
 
     }
 }

@@ -79,8 +79,7 @@ public class FFT
         if (valid_size != real_input.length)
         {
             double[] temp = new double[valid_size];
-            for (int i = 0; i < real_input.length; i++)
-                temp[i] = real_input[i];
+            System.arraycopy(real_input, 0, temp, 0, real_input.length);
             for (int i = real_input.length; i < valid_size; i++)
                 temp[i] = 0.0;
             real_input = temp;
@@ -94,8 +93,7 @@ public class FFT
             else
             {
                 temp = new double[valid_size];
-                for (int i = 0; i < imaginary_input.length; i++)
-                    temp[i] = imaginary_input[i];
+                System.arraycopy(imaginary_input, 0, temp, 0, imaginary_input.length);
                 for (int i = imaginary_input.length; i < valid_size; i++)
                     temp[i] = 0.0;
                 imaginary_input = temp;
@@ -325,16 +323,5 @@ public class FFT
     public double[] getRealValues()
     {
         return real_output;
-    }
-
-
-    /**
-     * Returns the real values as calculated by the FFT.
-     *
-     * @return	The real values.
-     */
-    public double[] getImaginaryValues()
-    {
-        return imaginary_output;
     }
 }

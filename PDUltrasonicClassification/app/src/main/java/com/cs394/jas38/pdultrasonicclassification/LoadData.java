@@ -64,9 +64,9 @@ public class LoadData extends ActionBarActivity
     /**
      * All the instances of used classes
      */
-    ReadWrite rw;
-    StatCalculator st;
-    Broker broker;
+    //private ReadWrite rw;
+    //private StatCalculator st;
+    private Broker broker;
     /**
      * This will hold the converted WAV file information
      */
@@ -90,7 +90,7 @@ public class LoadData extends ActionBarActivity
     /**
      * Pointers to the TextView sections in the xml file
      */
-    TextView smpl_rate;
+    TextView smpl_rate, classificationOutLbl, certainltyOutLbl;
     /**
      * Pointer to the Button in the xml file
      */
@@ -134,11 +134,11 @@ public class LoadData extends ActionBarActivity
         /**
          * Creates instance of the ReadWrite class to read the CSV file
          */
-        rw = new ReadWrite();
+        //rw = new ReadWrite();
         /**
          * Creates an instance of the StatCalculator class
          */
-        st = new StatCalculator();
+        //st = new StatCalculator();
         /**
          * Create instance of the Broker class
          */
@@ -152,6 +152,8 @@ public class LoadData extends ActionBarActivity
          * Gets a pointer the the TextView from the XML
          */
         smpl_rate = (TextView) findViewById(R.id.sample_rate_out);
+        classificationOutLbl = (TextView) findViewById(R.id.Classification_out);
+        certainltyOutLbl = (TextView) findViewById(R.id.certaintyOutLbl);
         /**
          * Gets a pointer the the Button from the XML
          */
@@ -356,21 +358,40 @@ public class LoadData extends ActionBarActivity
         /**
          * Converts the doubles to 4 decimal places and String.
          */
-        smpl_rate.setText(fourDecPla(audioData.getSampleRate()));
+        smpl_rate.setText(oneDecPla(audioData.getSampleRate()));
         /**
          *
          */
         classifier = new Classifier(audioData);
 
-        System.out.println("PD Value: " + classifier.getPercentPD());
-        System.out.println("Non PD Value: " + classifier.getPercentNonPD());
-
+        if(classifier.getPercentPD() == classifier.getPercentNonPD())
+        {
+            if (classifier.getPDCertainty() > classifier.getNonPDCertainty())
+            {
+                classificationOutLbl.setText("PD");
+                certainltyOutLbl.setText(oneDecPla(classifier.getPDCertainty()) + "%");
+            }else
+            {
+                classificationOutLbl.setText("Non-PD");
+                certainltyOutLbl.setText(oneDecPla(classifier.getNonPDCertainty()) + "%");
+            }
+        }
+        else if (classifier.getPercentPD() > classifier.getPercentNonPD())
+        {
+            classificationOutLbl.setText("PD");
+            certainltyOutLbl.setText(oneDecPla(classifier.getPDCertainty()) + "%");
+        }
+        else
+        {
+            classificationOutLbl.setText("Non-PD");
+            certainltyOutLbl.setText(oneDecPla(classifier.getNonPDCertainty()) + "%");
+        }
     }
 
     /**
      * ---------------------------------------------------------------
      * <p/>
-     * CALL NAME     : fourDecPla
+     * CALL NAME     : oneDecPla
      * <p/>
      * FUNCTION      : To take a Double round it to 4 decimal places and return it as a String.
      * <p/>
@@ -382,11 +403,11 @@ public class LoadData extends ActionBarActivity
      * <p/>
      * --------------------------------------------------------------
      */
-    public String fourDecPla(double val)
+    public String oneDecPla(double val)
     {
         /**
-         * Sets the val double to string using 10000 gives 4 decimal places.
+         * Sets the val double to string using 10 gives 1 decimal places.
          */
-        return Double.toString(Math.round(val * 10000) / 10000.0d);
+        return Double.toString(Math.round(val * 10) / 10.0d);
     }
 }

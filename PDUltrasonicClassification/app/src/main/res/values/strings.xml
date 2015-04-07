@@ -17,4 +17,10 @@
     <string name="TIMEDATE"><![CDATA[Time & Date:]]></string>
     <string name="DATEFORMAT">HH:MM_YYYY-MM-DD</string>
     <string name="REFERENCE">Reference:</string>
+    <string name="COUNTDOWN">10</string>
+    <string name="COUNTDOWNLBL">Count down:</string>
+    <string name="PLAYBACK">Playback</string>
+    <string name="SAVEASBTN">Save as..</string>
+    <string name="SAVEASDIFFBTN">Save as..</string>
+    <string name="CERTAINTY">Certainty:</string>
 </resources>

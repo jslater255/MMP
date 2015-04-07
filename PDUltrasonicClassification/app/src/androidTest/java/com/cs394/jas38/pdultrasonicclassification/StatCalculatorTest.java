@@ -2,8 +2,6 @@ package com.cs394.jas38.pdultrasonicclassification;
 
 import junit.framework.TestCase;
 
-import java.util.ArrayList;
-
 public class StatCalculatorTest extends TestCase {
 
     double[] wavTest = new double[10];
@@ -20,14 +18,6 @@ public class StatCalculatorTest extends TestCase {
         }
     }
 
-    public void tearDown() throws Exception {
-
-    }
-
-    public void testRun_avg() throws Exception {
-
-    }
-
     public void testAvg() throws Exception {
 
         double avg = st.avg(wavTest);
@@ -41,10 +31,6 @@ public class StatCalculatorTest extends TestCase {
 
         assertEquals("Stand Dev ", 3.0276503540974917, stanDev);
 
-    }
-
-    public void testPeaks() throws Exception {
-        //TODO
     }
 
     public void testVariance() throws Exception {

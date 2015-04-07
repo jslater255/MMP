@@ -65,11 +65,6 @@ public class AudioStruct {
      */
     private double[] wav_sample_window;
     /**
-     * Holds the magnitude and power spectrum of the current window
-     */
-    private double[] magnitudeSpectrum;
-    private double[] powerSpectrum;
-    /**
      * The Compactness variables.
      *
      * This is a good measure of how important a role regular beats
@@ -253,14 +248,14 @@ public class AudioStruct {
         int this_start = 0;
         while (this_start < wav.length)
         {
-            window_start_indices_list.add(new Integer(this_start));
+            window_start_indices_list.add(this_start);
             this_start += window_size;
         }
         Integer[] window_start_indices_I = window_start_indices_list.toArray(new Integer[1]);
         window_start_indices = new int[window_start_indices_I.length];
         for (int i = 0; i < window_start_indices.length; i++)
         {
-            window_start_indices[i] = window_start_indices_I[i].intValue();
+            window_start_indices[i] = window_start_indices_I[i];
         }// End of code from jAudio
     }
 
@@ -304,8 +299,10 @@ public class AudioStruct {
                 int start_sample = window_start_indices[win];
                 int end_sample = start_sample + window_size - 1;
                 if (end_sample < wav.length)
-                    for (int samp = start_sample; samp <= end_sample; samp++)
-                        wav_sample_window[samp - start_sample] = wav[samp];
+                    System.arraycopy(wav,
+                            start_sample, wav_sample_window,
+                            start_sample - start_sample,
+                            end_sample + 1 - start_sample);
                 else
                     for (int samp = start_sample; samp <= end_sample; samp++) {
                         if (samp < wav.length)
@@ -320,7 +317,10 @@ public class AudioStruct {
                  * magnitudeSpectrum is needed to work out the compactness & Spectral Variability.
                  * We use the magnitude spectrum is used for each window.
                  */
-                magnitudeSpectrum = new MagnitudeSpectrum().extractFeature(this.wav_sample_window, 0, null);
+                /*
+      Holds the magnitude and power spectrum of the current window
+     */
+                double[] magnitudeSpectrum = new MagnitudeSpectrum().extractFeature(this.wav_sample_window, 0, null);
                 /**
                  *  The powerSpectrum is needed to work out the spectralCentroid,
                  *                                              Spectral Rolloff Point,
@@ -328,14 +328,14 @@ public class AudioStruct {
                  *                                              Strongest Frequency Via FFT Max.
                  *  We use the power spectrum is used for each window.
                  */
-                powerSpectrum = new PowerSpectrum().extractFeature(this.wav_sample_window, 0, null);
+                double[] powerSpectrum = new PowerSpectrum().extractFeature(this.wav_sample_window, 0, null);
                 /**
                  * As the extract feature returns an array we get the first value in the array, position 0
                  */
-                compactnessWindowValues[win] = new Compactness().extractFeature(this.wav_sample_window, this.sampleRate, this.magnitudeSpectrum)[0];
-                spectralVariabilityWindowValues[win] = new SpectralVariability().extractFeature(this.wav_sample_window, this.sampleRate, this.magnitudeSpectrum)[0];
-                spectralCentroidWindowValues[win] = new SpectralCentroid().extractFeature(this.wav_sample_window, this.sampleRate, this.powerSpectrum)[0];
-                spectralRolloffPointWindowValues[win] = new SpectralRolloffPoint().extractFeature(this.wav_sample_window, this.sampleRate, this.powerSpectrum)[0];
+                compactnessWindowValues[win] = new Compactness().extractFeature(this.wav_sample_window, this.sampleRate, magnitudeSpectrum)[0];
+                spectralVariabilityWindowValues[win] = new SpectralVariability().extractFeature(this.wav_sample_window, this.sampleRate, magnitudeSpectrum)[0];
+                spectralCentroidWindowValues[win] = new SpectralCentroid().extractFeature(this.wav_sample_window, this.sampleRate, powerSpectrum)[0];
+                spectralRolloffPointWindowValues[win] = new SpectralRolloffPoint().extractFeature(this.wav_sample_window, this.sampleRate, powerSpectrum)[0];
                 /**
                  * We pass null at the end as they have no dependencies.
                  */
@@ -361,12 +361,12 @@ public class AudioStruct {
                  * dependency.
                  */
                 tmp[0] = spectralCentroidWindowValues[win];
-                strongestFrequencyViaSpectralCentroidWindowValues[win] = new StrongestFrequencyViaSpectralCentroid().extractFeature(null, this.sampleRate, tmp, this.powerSpectrum)[0];
+                strongestFrequencyViaSpectralCentroidWindowValues[win] = new StrongestFrequencyViaSpectralCentroid().extractFeature(null, this.sampleRate, tmp, powerSpectrum)[0];
                 /**
                  * StrongestFrequencyViaFFTMax has a dependency of FFTBinFrequencies so we
                  * pass in the information, FFTBinFrequencies has no dependencies.
                  */
-                strongestFrequencyViaFFTMaxWindowValues[win] = new StrongestFrequencyViaFFTMax().extractFeature(this.wav_sample_window, this.sampleRate, this.powerSpectrum, new FFTBinFrequencies().extractFeature(this.wav_sample_window, this.sampleRate, null))[0];
+                strongestFrequencyViaFFTMaxWindowValues[win] = new StrongestFrequencyViaFFTMax().extractFeature(this.wav_sample_window, this.sampleRate, powerSpectrum, new FFTBinFrequencies().extractFeature(this.wav_sample_window, this.sampleRate, null))[0];
             }
         } catch (Exception e) {
             e.printStackTrace();

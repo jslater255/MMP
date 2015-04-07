@@ -81,7 +81,6 @@ public class StrongestFrequencyViaSpectralCentroid
                                     double sampling_rate,
                                     double[] other_feature_values,
                                     double[] other_feature_values_1)
-            throws Exception
     {
         double spectral_centroid = other_feature_values[0];
         double[] pow_spectrum = other_feature_values_1;

@@ -23,7 +23,7 @@ public class SpectralVariabilityTest extends TestCase {
     }
 
     public void testExtractFeature() throws Exception {
-            assertEquals("RMS extract feature return array length",1,spectralVariability.extractFeature(data,sampleRate,data).length);
-            assertEquals("RMS extract feature first value",0.0,spectralVariability.extractFeature(data,sampleRate,data)[0]);
+            assertEquals("spectralVariability extract feature return array length",1,spectralVariability.extractFeature(data,sampleRate,data).length);
+            assertEquals("spectralVariability extract feature first value",0.0,spectralVariability.extractFeature(data,sampleRate,data)[0]);
     }
 }

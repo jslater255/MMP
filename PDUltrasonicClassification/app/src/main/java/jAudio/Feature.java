@@ -144,16 +144,4 @@ public abstract class Feature {
         throw new Exception(
                 "INTERNAL ERROR: This feature has no method defined for editing attributes.  Perhaps the author forgot to define this method.");
     }
-
-    /**
-     * Function that must be overridden to allow this feature to be set globally
-     * by GlobalChange frame.
-     *
-     * @param windowSize
-     *            the number of windows of offset to be used in calculating this
-     *            feature
-     */
-    public void setWindow(int windowSize) throws Exception {
-
-    }
 }

@@ -56,7 +56,7 @@ public class ExtAudioRecorder
      * ERROR : reconstruction needed
      * STOPPED: reset needed
      */
-    public enum State {INITIALIZING, READY, RECORDING, ERROR, STOPPED};
+    public enum State {INITIALIZING, READY, RECORDING, ERROR, STOPPED}
 
     // The interval in which the recorded samples are output to the file
     // Used only in uncompressed mode

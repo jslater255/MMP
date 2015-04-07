@@ -44,7 +44,7 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:text="Save"
+        android:text="@string/SAVEASBTN"
         android:id="@+id/saveBtn"
         android:background="@android:color/holo_orange_light"
         android:layout_alignParentBottom="true"

@@ -32,11 +32,6 @@ public class FileChooser extends ActionBarActivity
      * List view variable of the container with in the xml file
      */
     ListView listView;
-    /**
-     * The array of the files in the folder. It will hold the
-     * strings of the file names, provided by fileLists.
-     */
-    private ArrayAdapter<String> listAdapter;
     ArrayList<String> fileList;
     /**
      * The context of the screen. This is used to get the file
@@ -80,7 +75,11 @@ public class FileChooser extends ActionBarActivity
         /**
          * Adds the array list of files names to the list adapter to add it to the screen.
          */
-        listAdapter = new ArrayAdapter<>(this, R.layout.simplerow, fileList);
+        /**
+         * The array of the files in the folder. It will hold the
+         * strings of the file names, provided by fileLists.
+         */
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this, R.layout.simplerow, fileList);
         /**
          * Sets a pointer to the list view container.
          */

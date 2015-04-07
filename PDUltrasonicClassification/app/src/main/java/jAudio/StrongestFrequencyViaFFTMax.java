@@ -82,7 +82,6 @@ public class StrongestFrequencyViaFFTMax
                                     double sampling_rate,
                                     double[] other_feature_values,
                                     double[] other_feature_values_1)
-            throws Exception
     {
         double[] power_spectrum = other_feature_values;
         double[] labels = other_feature_values_1;

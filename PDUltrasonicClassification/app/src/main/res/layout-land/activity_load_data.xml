@@ -58,8 +58,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/Classification_out"
         android:layout_alignTop="@+id/clasification"
-        android:layout_alignEnd="@+id/sample_rate_out"
-        android:layout_alignStart="@+id/linearLayout3" />
+        android:layout_toEndOf="@+id/clasification" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -81,5 +80,25 @@
         android:gravity="center"
         android:layout_alignTop="@+id/sample_rate_lbl"
         android:layout_toStartOf="@+id/playWAV" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/CERTAINTY"
+        android:id="@+id/textView5"
+        android:layout_alignBottom="@+id/playWAV"
+        android:layout_alignStart="@+id/progBar"
+        android:layout_marginStart="39dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/certaintyOutLbl"
+        android:layout_alignBottom="@+id/playWAV"
+        android:layout_alignEnd="@+id/sample_rate_out"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5" />
 
 </RelativeLayout>
