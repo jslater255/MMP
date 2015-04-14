@@ -70,33 +70,32 @@ public class LoadData extends ActionBarActivity
     /**
      * This will hold the converted WAV file information
      */
-
-    AudioStruct audioData;
-    Classifier classifier;
+    private AudioStruct audioData;
+    private Classifier classifier;
     /**
      * The local context to make it easier to pass to other classes.
      * I have done this as it reads a lot better to pass 'context' rather than this.
      */
-    Context context;
+    private Context context;
     /**
      * From com.jjoe64.graphview.GraphView this is used for a pointer to the place
      * in the LoadData.xml file
      */
-    GraphView graph;
+    private GraphView graph;
     /**
      * A pointer to an android progress swirl
      */
-    ProgressBar mProgress;
+    private ProgressBar mProgress;
     /**
      * Pointers to the TextView sections in the xml file
      */
-    TextView smpl_rate, classificationOutLbl, certainltyOutLbl;
+    private TextView smpl_rate, classificationOutLbl, certainltyOutLbl;
     /**
      * Pointer to the Button in the xml file
      */
-    Button playBtn;
+    private Button playBtn;
 
-    DataPoint[] data;
+    private DataPoint[] data;
 
     /**
      * ---------------------------------------------------------------

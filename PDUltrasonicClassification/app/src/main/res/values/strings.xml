@@ -13,7 +13,7 @@
     <string name="CLASSIFICATION">Classification:</string>
     <string name="SAMPLE_RATE">Sample rate:</string>
 
-    <string name="myAlphaNumeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-</string>
+    <string name="myAlphaNumeric">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_- </string>
     <string name="TIMEDATE"><![CDATA[Time & Date:]]></string>
     <string name="DATEFORMAT">HH:MM_YYYY-MM-DD</string>
     <string name="REFERENCE">Reference:</string>

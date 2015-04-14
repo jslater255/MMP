@@ -38,7 +38,7 @@ public class AudioStruct {
      *
      * If changed please re work out the values for the rule base.
      */
-    private final int window_size = 512;
+    private final int WINDOW_SIZE = 512;
     /**
      * The file name as the path is the same for all files.
      */
@@ -207,7 +207,7 @@ public class AudioStruct {
     public AudioStruct(String fileName) {
         this.fileName = fileName;
         // set the sample window up to the window size
-        wav_sample_window = new double[window_size];
+        wav_sample_window = new double[WINDOW_SIZE];
         // set all values to -1
         // I do this because we can check if they have been calculated
         spectralRolloffPointAvg = spectralRolloffPointStandDev
@@ -249,7 +249,7 @@ public class AudioStruct {
         while (this_start < wav.length)
         {
             window_start_indices_list.add(this_start);
-            this_start += window_size;
+            this_start += WINDOW_SIZE;
         }
         Integer[] window_start_indices_I = window_start_indices_list.toArray(new Integer[1]);
         window_start_indices = new int[window_start_indices_I.length];
@@ -297,7 +297,7 @@ public class AudioStruct {
             for (int win = 0; win < window_start_indices.length; win++) {
                 // code from jAudio
                 int start_sample = window_start_indices[win];
-                int end_sample = start_sample + window_size - 1;
+                int end_sample = start_sample + WINDOW_SIZE - 1;
                 if (end_sample < wav.length)
                     System.arraycopy(wav,
                             start_sample, wav_sample_window,

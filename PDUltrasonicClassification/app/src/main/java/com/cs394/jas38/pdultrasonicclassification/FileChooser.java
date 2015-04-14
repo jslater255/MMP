@@ -31,13 +31,13 @@ public class FileChooser extends ActionBarActivity
     /**
      * List view variable of the container with in the xml file
      */
-    ListView listView;
-    ArrayList<String> fileList;
+    private ListView listView;
+    private ArrayList<String> fileList;
     /**
      * The context of the screen. This is used to get the file
      * paths and must not be null.
      */
-    Context context;
+    private Context context;
     /**
      * ---------------------------------------------------------------
      * <p/>
@@ -155,11 +155,15 @@ public class FileChooser extends ActionBarActivity
     public ArrayList<String> getListFiles(File parentDir) {
         ArrayList<String> inFiles = new ArrayList<>();
         File[] files = parentDir.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
+        for (File file : files)
+        {
+            if (file.isDirectory())
+            {
                 inFiles.addAll(getListFiles(file));
-            } else {
-                if(file.getName().endsWith(".wav")){
+            } else
+            {
+                if(file.getName().endsWith(".wav"))
+                {
                     inFiles.add(file.getName());
                 }
             }
