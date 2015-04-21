@@ -49,7 +49,7 @@ public class FFT
      *								be applied.
      * @param	use_hanning_window	A value of true means that a Hanning window
      *								will be applied to the real_input. A value
-     *								of valse will result in the application of
+     *								of false will result in the application of
      *								a Hanning window.
      * @throws	Exception			Throws an exception if the real and imaginary
      *								inputs are of different sizes or if less than

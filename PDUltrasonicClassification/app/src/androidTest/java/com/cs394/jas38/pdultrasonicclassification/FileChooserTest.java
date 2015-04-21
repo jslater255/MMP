@@ -30,9 +30,14 @@ public class FileChooserTest extends ActivityInstrumentationTestCase2<FileChoose
     }
 
     public void testClickMeButton_clickButtonAndExpectInfoText() {
-        String expectedText = "ea.wav";
+        String expectedText = "tmp.wav";
         assertNotNull("listView is null", lv);
-        assertEquals(expectedText, lv.getAdapter().getItem(0));
+        if (lv.getAdapter().isEmpty()){
+            assertEquals(0, lv.getAdapter().getCount());
+        }else{
+            assertEquals(expectedText, lv.getAdapter().getItem(0));
+        }
+
     }
 
     public void tearDown() throws Exception {

@@ -25,5 +25,8 @@ public class FFTBinFrequenciesTest extends TestCase {
     public void testExtractFeature() throws Exception {
         assertEquals("Testing FFTBinFrequencies extract feature double array length", 65536, fftBinFreq.extractFeature(data,sampleRate,null).length);
         assertEquals("Testing FFTBinFrequencies extract features: ", 0.030517578125, fftBinFreq.extractFeature(data,sampleRate,null)[0]);
+        data = new double[1];
+        assertEquals("Testing FFTBinFrequencies extract feature double array length 2", 1, fftBinFreq.extractFeature(data,sampleRate,null).length);
+        assertEquals("Testing FFTBinFrequencies extract features 2: ", 2000.0, fftBinFreq.extractFeature(data,sampleRate,null)[0]);
     }
 }

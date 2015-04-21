@@ -23,10 +23,8 @@ public class SpectralRolloffPoint extends Feature {
      */
     public SpectralRolloffPoint() {
         name = "Spectral Rolloff Point";
-        definition = "The fraction of bins in the power spectrum at which 85% "
-                + // System.getProperty("line.separator") +
-                "of the power is at lower frequencies. This is a measure " + // System.getProperty("line.separator")
-                // +
+        definition = "The fraction of bins in the power spectrum at which 85% " +
+                "of the power is at lower frequencies. This is a measure " +
                 "of the right-skewedness of the power spectrum.";
 
         dependencies = new String[1];

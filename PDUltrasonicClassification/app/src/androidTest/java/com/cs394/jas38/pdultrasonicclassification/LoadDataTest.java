@@ -15,7 +15,7 @@ public class LoadDataTest extends TestCase {
 
         double test = 3.333333;
 
-        assertEquals("Test rounding to 4 decimal places", "3.3333", ld.oneDecPla(test));
+        assertEquals("Test rounding to 4 decimal places", "3.3", ld.oneDecPla(test));
 
     }
 }
