@@ -1,0 +1,71 @@
+=== Run information ===
+
+Scheme:weka.classifiers.rules.PART -M 2 -C 0.25 -Q 1
+Relation:     partial_discharge
+Instances:    11
+Attributes:   24
+              Spectral_Centroid_SD
+              Spectral_Rolloff_Point_SD
+              Spectral_Flux_SD
+              Compactness_SD
+              Spectral_Variability_SD
+              RMS_SD
+              Fraction_Of_Low_Energy_Windows_SD
+              Zero_Crossings_SD
+              Strongest_Freq_Zero_Crossing_SD
+              Strongest_Frequency_Spectral_Centroid_SD
+              Strongest_Frequency_Via_FFT_Maximum_SD
+              Relative_Difference_Function_SD
+              Spectral_Centroid_Average
+              Spectral_Rolloff_Point_Average
+              Spectral_Flux_Average
+              Compactness_Average
+              Spectral_Variability_Average
+              RMS_Average
+              Fraction_Of_Low_Energy_Windows_Average
+              Zero_Crossings_Average
+              Strongest_Frequency_Zero_Crossings_Average
+              Strongest_Frequency_Via_Spectral_Centroid_Average
+              Strongest_Frequency_Via_FFT_Maximum_Average
+              class
+Test mode:11-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+PART decision list
+------------------
+
+Compactness_Average <= 1536: PD (6.0)
+
+: Non-PD (5.0)
+
+Number of Rules  : 	2
+
+
+Time taken to build model: 0.02 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances          10               90.9091 %
+Incorrectly Classified Instances         1                9.0909 %
+Kappa statistic                          0.8197
+Mean absolute error                      0.0909
+Root mean squared error                  0.3015
+Relative absolute error                 16.9014 %
+Root relative squared error             55.8896 %
+Total Number of Instances               11     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 0.833     0          1         0.833     0.909      0.917    PD
+                 1         0.167      0.833     1         0.909      0.917    Non-PD
+Weighted Avg.    0.909     0.076      0.924     0.909     0.909      0.917
+
+=== Confusion Matrix ===
+
+ a b   <-- classified as
+ 5 1 | a = PD
+ 0 5 | b = Non-PD
+
